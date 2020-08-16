@@ -7,10 +7,12 @@ class Message {
     public array $recipients;
     public string $htmlBody;
     public string $textBody;
+    public string $subject;
 
     public function __construct(
         string $sender, 
-        array $recipients, 
+        array $recipients,
+        string $subject, 
         string $htmlBody,
         string $textBody
     ) {
@@ -18,5 +20,6 @@ class Message {
         $this->recipients = $recipients;
         $this->htmlBody = $htmlBody;
         $this->textBody = $textBody;
+        $this->subject = $subject;
     }
 }

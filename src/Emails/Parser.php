@@ -20,6 +20,7 @@ class Parser {
                 }
                 return $email;
             }, $message->getHeader('to')->getAddresses()),
+            $message->getHeaderValue('subject'),
             $message->getHtmlContent(),
             $message->getTextContent(),
         );

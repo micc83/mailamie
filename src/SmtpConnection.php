@@ -1,0 +1,94 @@
+<?php
+
+namespace Mailamie;
+
+use Mailamie\Events\Message;
+use Mailamie\Events\Request;
+use Mailamie\Events\Response;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use React\Socket\ConnectionInterface;
+
+class SmtpConnection
+{
+    private ConnectionInterface $connection;
+    private EventDispatcherInterface $events;
+    private string $messageBody = '';
+
+    /** @var string[] */
+    private array $recipients = [];
+
+    const READY = 220;
+    const OK = 250;
+    const CLOSING = 221;
+    const START_MAIL_INPUT = 354;
+
+    /**
+     * @var array<int,string>
+     */
+    private static array $statusDescriptions = [
+        self::READY => 'Service ready',
+        self::OK => 'OK',
+        self::CLOSING => 'Service closing transmission channel',
+        self::START_MAIL_INPUT => 'Start mail input; end with <CRLF>.<CRLF>'
+    ];
+
+    public function __construct(
+        ConnectionInterface $connection,
+        EventDispatcherInterface $events
+    ) {
+        $this->connection = $connection;
+        $this->events = $events;
+    }
+
+    public function ready(): void
+    {
+        $this->send(static::READY);
+    }
+
+    public function handle(string $data): void
+    {
+        $this->events->dispatch(new Request($data));
+
+        if (preg_match("/^RCPT TO:<(.*)>/", $data, $matches)) {
+            $this->addRecipient($matches[0]);
+            $this->send(static::OK);
+        } elseif (preg_match("/^(EHLO|HELO|MAIL FROM:)/", $data)) {
+            $this->send(static::OK);
+        } elseif ($data === "DATA\r\n") {
+            $this->send(static::START_MAIL_INPUT);
+        } elseif ($data === "QUIT\r\n") {
+            $this->send(static::CLOSING);
+        } elseif (strpos($data, "\r\n.\r\n")) {
+            $this->addToMessageBody($data);
+            $this->send(static::OK);
+            $this->dispatchMessage();
+        } else {
+            $this->addToMessageBody($data);
+        }
+    }
+
+    private function dispatchMessage(): void
+    {
+        $this->events->dispatch(
+            new Message($this->messageBody, $this->recipients)
+        );
+    }
+
+    private function addRecipient(string $recipient): void
+    {
+        $this->recipients[] = $recipient;
+    }
+
+    private function addToMessageBody(string $content): void
+    {
+        $this->messageBody .= $content;
+    }
+
+    private function send(int $statusCode): void
+    {
+        $this->events->dispatch(
+            new Response($statusCode, static::$statusDescriptions[$statusCode])
+        );
+        $this->connection->write("{$statusCode}\r\n");
+    }
+}

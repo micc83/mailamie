@@ -8,6 +8,6 @@ class Request
 
     public function __construct(string $body)
     {
-        $this->body = str_replace("\r\n", "⏎", $body);
+        $this->body = str_replace("\r\n", "⏎ ", $body);
     }
 }
