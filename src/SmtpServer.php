@@ -3,37 +3,39 @@
 namespace Mailamie;
 
 use Mailamie\Events\DebugEvent;
-use Mailamie\Events\Message;
-use Mailamie\Events\Request;
-use Mailamie\Events\Response;
 use Mailamie\Events\ServerStarted;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use React\EventLoop\StreamSelectLoop;
 use React\Socket\ConnectionInterface;
+use React\Socket\Server;
 
-class Server
+class SmtpServer
 {
     private string $host;
     private EventDispatcherInterface $events;
 
-    public function __construct(string $host, EventDispatcherInterface $events)
+    const DEFAULT_HOST = '127.0.0.1:8025';
+    /**
+     * @var StreamSelectLoop
+     */
+    private StreamSelectLoop $loop;
+
+    public function __construct(string $host, StreamSelectLoop $loop, EventDispatcherInterface $events)
     {
-        $this->host = $host;
+        $this->host = $host ?: static::DEFAULT_HOST;
         $this->events = $events;
+        $this->loop = $loop;
     }
 
     public function start(): void
     {
-        $loop = \React\EventLoop\Factory::create();
-
-        $socket = new \React\Socket\Server($this->host, $loop);
+        $socket = new Server($this->host, $this->loop);
 
         $socket->on('connection', function (ConnectionInterface $connection) {
             $this->handleConnection($connection);
         });
 
         $this->events->dispatch(new ServerStarted($socket->getAddress()));
-
-        $loop->run();
     }
 
     private function handleConnection(ConnectionInterface $connection): void

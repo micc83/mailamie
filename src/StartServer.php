@@ -3,88 +3,86 @@
 namespace Mailamie;
 
 use Exception;
+use Mailamie\Console\Helpers;
 use Mailamie\Emails\Parser;
 use Mailamie\Events\DebugEvent;
 use Mailamie\Events\Message;
 use Mailamie\Events\Request;
 use Mailamie\Events\Response;
 use Mailamie\Events\ServerStarted;
+use React\EventLoop\Factory;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleSectionOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class StartServer extends Command
 {
+    use Helpers;
+
     protected static $defaultName = 'start-server';
-    protected ?OutputInterface $output;
 
     protected function configure()
     {
-        $this
-            ->setDescription('Creates a new user.')
-            ->setHelp('This command allows you to create a user...')
-            ->setDefinition(
-                new InputDefinition([
-                    new InputOption('host', 'H', InputOption::VALUE_REQUIRED)
-                ])
-            );
+        $this->setDefinition(
+            new InputDefinition([
+                new InputOption('host', 'H', InputOption::VALUE_REQUIRED)
+            ])
+        );
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     * @throws Exception
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->output = $output;
-
-        /** @var string $host */
-        $host = $input->getOption('host') ?: '127.0.0.1:8025';
-
-        $section = $output->section();
-        $section->writeln("\n<comment>Starting server...</comment>\n");
-
-        sleep(1);
+        $this->input = $input;
 
         $dispatcher = new EventDispatcher();
 
-        $server = new Server($host, $dispatcher);
+        $loop = Factory::create();
 
-        $dispatcher->addListener(ServerStarted::class, function (ServerStarted $event) use ($section) {
-            $formatter = $this->getHelper('formatter');
-            $message = ['✓ SERVER UP AND RUNNING', "Listening on {$event->host}"];
-            $formattedBlock = $formatter->formatBlock($message, 'info', true);
-            $section->overwrite($formattedBlock);
+        $smtp = (new SmtpServer($this->getHost(), $loop, $dispatcher));
+
+        $this->registerEventListenersOn($dispatcher);
+
+        $smtp->start();
+
+        $loop->run();
+
+        return Command::SUCCESS;
+    }
+
+    private function registerEventListenersOn(EventDispatcher $dispatcher)
+    {
+        $startingSection = $this->startingBanner();
+
+        $dispatcher->addListener(ServerStarted::class, function (ServerStarted $event) use ($startingSection) {
+            $this->writeInfoBlockOn(
+                $startingSection,
+                '✓ SERVER UP AND RUNNING',
+                "Listening on {$event->host}"
+            );
         });
 
         $dispatcher->addListener(Message::class, function (Message $message) {
             $this->handleMessage($message);
         });
 
-        if ($output->isVerbose()) {
-            $dispatcher->addListener(Request::class, function (Request $request) {
-                $this->writeFormatted('CLIENT', $request->body, 'cyan');
-            });
-
-
-            $dispatcher->addListener(Response::class, function (Response $response) {
-                $this->writeFormatted(
-                    'SERVER',
-                    "<options=bold>{$response->code}</> - {$response->body}",
-                    'magenta'
-                );
-            });
+        if ($this->getOutput()->isVerbose()) {
+            $this->addVerboseListeners($dispatcher);
         }
 
-        if ($output->isVeryVerbose()) {
-            $dispatcher->addListener(DebugEvent::class, function (DebugEvent $event) {
-                $this->writeFormatted('DEBUG',  $event->param, 'yellow');
-            });
+        if ($this->getOutput()->isVeryVerbose()) {
+            $this->addVeryVerboseListeners($dispatcher);
         }
-
-        $server->start();
-
-        return Command::SUCCESS;
     }
 
     private function handleMessage(Message $message): void
@@ -110,42 +108,39 @@ class StartServer extends Command
         ]);
     }
 
-    private function getOutput(): OutputInterface
+    private function getHost(): string
     {
-        if (!$this->output) {
-            throw new Exception('Output should be defined by now');
-        }
-        return $this->output;
+        return (string)$this->getInput()->getOption('host');
     }
 
-    /**
-     * @param array[] $rows
-     * @return void
-     */
-    private function writeTable(array $rows): void
+    private function startingBanner(): ConsoleSectionOutput
     {
-        $table = new Table($this->getOutput());
-        $table->setRows($rows);
-        $table->setColumnMaxWidth(1, 60);
-        $table->render();
+        $section = $this->createSection();
+
+        $section->writeln("\n<comment>Starting server...</comment>\n");
+
+        return $section;
     }
 
-    private function writeFormatted(string $section, string $content, string $color): void
+    private function addVerboseListeners(EventDispatcher $dispatcher): void
     {
-        $output = $this->getOutput();
+        $dispatcher->addListener(Request::class, function (Request $request) {
+            $this->writeFormatted('CLIENT', $request->body, 'cyan');
+        });
 
-        if (!$output->isDebug()) {
-            $content = mb_strimwidth($content, 0, 80, '...');
-        }
-
-        $formattedLine = $this
-            ->getHelper('formatter')
-            ->formatSection(
-                $section,
-                $content,
-                "fg={$color}"
+        $dispatcher->addListener(Response::class, function (Response $response) {
+            $this->writeFormatted(
+                'SERVER',
+                "<options=bold>{$response->code}</> - {$response->body}",
+                'magenta'
             );
+        });
+    }
 
-        $output->writeln($formattedLine);
+    private function addVeryVerboseListeners(EventDispatcher $dispatcher): void
+    {
+        $dispatcher->addListener(DebugEvent::class, function (DebugEvent $event) {
+            $this->writeFormatted('DEBUG', $event->param, 'yellow');
+        });
     }
 }
