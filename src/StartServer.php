@@ -18,6 +18,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleSectionOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Mailamie\Emails\Store as MessageStore;
 
 class StartServer extends Command
 {
@@ -49,18 +50,23 @@ class StartServer extends Command
 
         $loop = Factory::create();
 
-        $smtp = (new SmtpServer($this->getHost(), $loop, $dispatcher));
+        $smtpServer = new SmtpServer($this->getHost(), $loop, $dispatcher);
 
-        $this->registerEventListenersOn($dispatcher);
+        $messageStore = new MessageStore();
 
-        $smtp->start();
+        $webServer = new WebServer($loop, $messageStore);
+
+        $this->registerEventListenersOn($dispatcher, $messageStore);
+
+        $smtpServer->start();
+        $webServer->start();
 
         $loop->run();
 
         return Command::SUCCESS;
     }
 
-    private function registerEventListenersOn(EventDispatcher $dispatcher)
+    private function registerEventListenersOn(EventDispatcher $dispatcher, MessageStore $messageStore)
     {
         $startingSection = $this->startingBanner();
 
@@ -72,8 +78,8 @@ class StartServer extends Command
             );
         });
 
-        $dispatcher->addListener(Message::class, function (Message $message) {
-            $this->handleMessage($message);
+        $dispatcher->addListener(Message::class, function (Message $message) use ($messageStore) {
+            $this->handleMessage($message, $messageStore);
         });
 
         if ($this->getOutput()->isVerbose()) {
@@ -85,19 +91,21 @@ class StartServer extends Command
         }
     }
 
-    private function handleMessage(Message $message): void
+    private function handleMessage(Message $message, MessageStore $messageStore): void
     {
         $parser = new Parser();
 
         $email = $parser->parse($message->body);
+        $id = $messageStore->store($email);
 
         $this->writeFormatted(
             'MESSAGE',
-            "<options=bold>New message for:</> " . implode("; ", $email->recipients),
+            "<options=bold>Yurray, you got a new message!</>",
             'green'
         );
 
         $this->writeTable([
+            ['ID', $id],
             ['From', $email->sender],
             ['To', implode("; ", $email->recipients)],
             ['Cc', implode("; ", $email->recipients)],
