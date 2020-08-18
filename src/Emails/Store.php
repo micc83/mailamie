@@ -51,7 +51,7 @@ class Store
                 'from'       => $message->sender,
                 'recipients' => $message->recipients,
                 'subject'    => $message->subject,
-                'created_at' => $message->created_at->format('Y-m-d H:i')
+                'created_at' => $message->created_at->format('Y-m-d H:i:s')
             ];
         }, $this->messages));
     }
