@@ -5,11 +5,17 @@ namespace Mailamie;
 use Exception;
 use Mailamie\Console\Helpers;
 use Mailamie\Emails\Parser;
+use Mailamie\Emails\Store as MessageStore;
 use Mailamie\Events\DebugEvent;
 use Mailamie\Events\Message;
 use Mailamie\Events\Request;
 use Mailamie\Events\Response;
 use Mailamie\Events\ServerStarted;
+use Ratchet\ConnectionInterface;
+use Ratchet\Http\HttpServer;
+use Ratchet\MessageComponentInterface;
+use Ratchet\Server\IoServer;
+use Ratchet\WebSocket\WsServer;
 use React\EventLoop\Factory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -18,7 +24,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleSectionOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Mailamie\Emails\Store as MessageStore;
 
 class StartServer extends Command
 {
@@ -56,10 +61,13 @@ class StartServer extends Command
 
         $webServer = new WebServer($loop, $messageStore);
 
+        $websocketServer = new WebSocketServer($loop, $messageStore);
+
         $this->registerEventListenersOn($dispatcher, $messageStore);
 
         $smtpServer->start();
         $webServer->start();
+        $websocketServer->start();
 
         $loop->run();
 
@@ -96,9 +104,7 @@ class StartServer extends Command
         $parser = new Parser();
 
         $email = $parser->parse($message->body);
-        $email->setId(
-            $messageStore->store($email)
-        );
+        $messageStore->store($email);
 
         $this->writeFormatted(
             'MESSAGE',

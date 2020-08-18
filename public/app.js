@@ -2127,6 +2127,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     var _this = this;
@@ -2136,24 +2139,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              new WebSocket("ws://localhost:1338").onmessage = function (event) {
+                var message = JSON.parse(event.data);
+
+                _this.messages.unshift(message);
+
+                if (!_this.message) {
+                  _this.message = message;
+                }
+              };
+
+              _context.next = 3;
               return axios.get('/api/messages');
 
-            case 2:
+            case 3:
               _this.messages = _context.sent.data;
 
               if (!_this.messages[0]) {
-                _context.next = 6;
+                _context.next = 7;
                 break;
               }
 
-              _context.next = 6;
+              _context.next = 7;
               return _this.loadMessage(_this.messages[0].id);
 
-            case 6:
+            case 7:
               _this.loading = false;
 
-            case 7:
+            case 8:
             case "end":
               return _context.stop();
           }
@@ -4111,6 +4124,12 @@ var render = function() {
               }
             },
             [
+              _c("div", { staticClass: "float-right text-muted small" }, [
+                _vm._v(
+                  "\n          " + _vm._s(messageItem.created_at) + "\n        "
+                )
+              ]),
+              _vm._v(" "),
               _c(
                 "strong",
                 { staticClass: "d-block message-list-item-subject" },

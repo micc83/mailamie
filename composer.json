@@ -9,7 +9,8 @@
     "symfony/console": "^5.1",
     "symfony/event-dispatcher": "^5.1",
     "ext-mbstring": "*",
-    "ext-json": "*"
+    "ext-json": "*",
+    "cboden/ratchet": "^0.4.3"
   },
   "autoload": {
     "psr-4": {

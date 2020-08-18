@@ -6,6 +6,9 @@
         <div v-for="messageItem in messages" @click="loadMessage(messageItem.id)" :key="messageItem.id"
              :class="(message && (message.id === messageItem.id))?'active':''"
              class="border-bottom p-3 message-list-item">
+          <div class="float-right text-muted small">
+            {{ messageItem.created_at }}
+          </div>
           <strong class="d-block message-list-item-subject">{{ messageItem.subject }}</strong>
           <small><span class="text-muted">To:</span> {{ messageItem.recipients.join(', ') }}</small>
         </div>
@@ -96,10 +99,20 @@
 <script>
 export default {
   async created() {
+    new WebSocket("ws://localhost:1338").onmessage = event => {
+      let message = JSON.parse(event.data);
+      this.messages.unshift(message)
+      if (!this.message){
+        this.message = message;
+      }
+    };
+
     this.messages = (await axios.get('/api/messages')).data;
+
     if (this.messages[0]) {
       await this.loadMessage(this.messages[0].id)
     }
+
     this.loading = false;
   },
   data() {

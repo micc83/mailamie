@@ -2,6 +2,7 @@
 
 namespace Mailamie\Emails;
 
+use Closure;
 use Exception;
 
 class Store
@@ -11,10 +12,21 @@ class Store
      */
     private array $messages = [];
 
+    /**
+     * @var Closure[]
+     */
+    private array $callbacks;
+
+
     public function store(Message $message): string
     {
         $id = (string)uniqid();
+        $message->setId($id);
         $this->messages[$id] = $message;
+
+        foreach ($this->callbacks as $callback){
+            $callback($message);
+        }
 
         return $id;
     }
@@ -38,8 +50,14 @@ class Store
                 'id'         => $message->id,
                 'from'       => $message->sender,
                 'recipients' => $message->recipients,
-                'subject'    => $message->subject
+                'subject'    => $message->subject,
+                'created_at' => $message->created_at->format('Y-m-d H:i')
             ];
         }, $this->messages));
+    }
+
+    public function onNewMessage(Closure $callback)
+    {
+        $this->callbacks[] = $callback;
     }
 }

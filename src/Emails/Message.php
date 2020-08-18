@@ -2,6 +2,8 @@
 
 namespace Mailamie\Emails;
 
+use DateTime;
+
 class Message
 {
     public ?string $id;
@@ -10,6 +12,7 @@ class Message
     public string $htmlBody;
     public string $textBody;
     public string $subject;
+    public DateTime $created_at;
 
     public function __construct(
         string $sender,
@@ -24,6 +27,7 @@ class Message
         $this->htmlBody = $htmlBody;
         $this->textBody = $textBody;
         $this->subject = $subject;
+        $this->created_at = new DateTime();
     }
 
     public function setId(string $id): void
@@ -38,7 +42,8 @@ class Message
             'from'       => $this->sender,
             'subject'    => $this->subject,
             'recipients' => $this->recipients,
-            'html'       => $this->htmlBody
+            'html'       => $this->htmlBody,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s')
         ];
     }
 }

@@ -21,7 +21,7 @@ try {
     $mail->addCC('cc@example.com');
     $mail->addBCC('bcc@example.com');
 
-    $mail->Subject = 'Here is the subject';
+    $mail->Subject = 'Here is the subject, welcome to New york!';
     $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
     $mail->AltBody = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum lacinia rutrum neque. Etiam eu pretium diam. Suspendisse porta in enim vitae aliquam. Nulla vel sapien nec est placerat accumsan vitae id justo. Pellentesque rhoncus viverra lacus, in ullamcorper sapien posuere ut. Phasellus consectetur mollis ipsum eu finibus. Fusce vulputate odio ut sapien placerat porta. Vestibulum eleifend eleifend metus, vitae dapibus elit interdum vitae. Morbi molestie interdum nisl, sed commodo felis tincidunt sed.
 
