@@ -4,6 +4,7 @@ namespace Mailamie\Emails;
 
 class Message
 {
+    public ?string $id;
     public string $sender;
     public array $recipients;
     public string $htmlBody;
@@ -25,12 +26,19 @@ class Message
         $this->subject = $subject;
     }
 
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
     public function toArray(): array
     {
         return [
+            'id'         => $this->id,
             'from'       => $this->sender,
             'subject'    => $this->subject,
-            'recipients' => $this->recipients
+            'recipients' => $this->recipients,
+            'html'       => $this->htmlBody
         ];
     }
 }

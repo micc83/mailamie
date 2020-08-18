@@ -7,7 +7,6 @@ use ZBateson\MailMimeParser\Header\Part\AddressPart;
 class Parser {
     public function parse(string $content): Message
     {
-        $mailParser = new \ZBateson\MailMimeParser\MailMimeParser();
         $message = \ZBateson\MailMimeParser\Message::from($content);
 
         return new Message(

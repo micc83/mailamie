@@ -33,13 +33,13 @@ class Store
      */
     public function all(): array
     {
-        return array_map(function (Message $message, string $key) {
+        return array_values(array_map(function (Message $message) {
             return [
-                'id'         => $key,
+                'id'         => $message->id,
                 'from'       => $message->sender,
                 'recipients' => $message->recipients,
                 'subject'    => $message->subject
             ];
-        }, $this->messages);
+        }, $this->messages));
     }
 }

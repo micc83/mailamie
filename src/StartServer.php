@@ -96,7 +96,9 @@ class StartServer extends Command
         $parser = new Parser();
 
         $email = $parser->parse($message->body);
-        $id = $messageStore->store($email);
+        $email->setId(
+            $messageStore->store($email)
+        );
 
         $this->writeFormatted(
             'MESSAGE',
@@ -105,7 +107,7 @@ class StartServer extends Command
         );
 
         $this->writeTable([
-            ['ID', $id],
+            ['ID', $email->id],
             ['From', $email->sender],
             ['To', implode("; ", $email->recipients)],
             ['Cc', implode("; ", $email->recipients)],
