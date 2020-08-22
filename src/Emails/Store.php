@@ -15,8 +15,7 @@ class Store
     /**
      * @var Closure[]
      */
-    private array $callbacks;
-
+    private array $callbacks = [];
 
     public function store(Message $message): string
     {
@@ -24,7 +23,7 @@ class Store
         $message->setId($id);
         $this->messages[$id] = $message;
 
-        foreach ($this->callbacks as $callback){
+        foreach ($this->callbacks as $callback) {
             $callback($message);
         }
 

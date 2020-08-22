@@ -11,6 +11,9 @@ use SplObjectStorage;
 
 class WebSocketComponent implements MessageComponentInterface
 {
+    /**
+     * @var SplObjectStorage<ConnectionInterface>
+     */
     protected SplObjectStorage $clients;
     private Store $store;
 
@@ -18,15 +21,21 @@ class WebSocketComponent implements MessageComponentInterface
     {
         $this->clients = new SplObjectStorage;
         $this->store = $store;
+        $this->noticeNewMessagesToClients();
+    }
+
+    private function noticeNewMessagesToClients(): void
+    {
+        $this->store->onNewMessage(function (Message $message) {
+            foreach ($this->clients as $client) {
+                $client->send(json_encode($message->toArray()));
+            }
+        });
     }
 
     function onOpen(ConnectionInterface $conn)
     {
         $this->clients->attach($conn);
-
-        $this->store->onNewMessage(function (Message $message) use ($conn) {
-            $conn->send(json_encode($message->toArray()));
-        });
     }
 
     function onClose(ConnectionInterface $conn)
