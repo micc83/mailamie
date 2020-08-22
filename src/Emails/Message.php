@@ -6,6 +6,7 @@ use DateTime;
 
 class Message
 {
+    private string $raw;
     public ?string $id;
     public string $sender;
     public array $recipients;
@@ -15,6 +16,7 @@ class Message
     public DateTime $created_at;
 
     public function __construct(
+        string $raw,
         string $sender,
         array $recipients,
         string $subject,
@@ -22,6 +24,7 @@ class Message
         string $textBody
     )
     {
+        $this->raw = $raw;
         $this->sender = $sender;
         $this->recipients = $recipients;
         $this->htmlBody = $htmlBody;
@@ -43,6 +46,8 @@ class Message
             'subject'    => $this->subject,
             'recipients' => $this->recipients,
             'html'       => $this->htmlBody,
+            'text'       => $this->textBody,
+            'raw'        => $this->raw,
             'created_at' => $this->created_at->format('Y-m-d H:i:s')
         ];
     }

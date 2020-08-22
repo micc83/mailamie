@@ -10,6 +10,7 @@ class Parser {
         $message = \ZBateson\MailMimeParser\Message::from($content);
 
         return new Message(
+            $content,
             $message->getHeader('from')->getRawValue(),
             array_map(function (AddressPart $addressPart) {
                 $name = $addressPart->getName();
