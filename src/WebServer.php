@@ -39,7 +39,8 @@ class WebServer
                     }
                 } catch (Throwable $e) {
                     return new Response(
-                        500, ['Content-Type' => 'text/html'],
+                        500,
+                        ['Content-Type' => 'text/html'],
                         "<h2>{$e->getMessage()}</h2> <pre>{$e->getTraceAsString()}</pre>"
                     );
                 }
@@ -49,13 +50,15 @@ class WebServer
 
             if (file_exists('public' . $path)) {
                 return new Response(
-                    200, ['Content-Type' => 'text/html'],
+                    200,
+                    ['Content-Type' => 'text/html'],
                     file_get_contents('public' . $path)
                 );
             }
 
             return new Response(
-                404, ['Content-Type' => 'text/html'],
+                404,
+                ['Content-Type' => 'text/html'],
                 "<h2>404 - Page or content not found</h2>"
             );
         });
@@ -71,7 +74,8 @@ class WebServer
     private function json($data): Response
     {
         return new Response(
-            200, ['Content-Type' => 'application/json'],
+            200,
+            ['Content-Type' => 'application/json'],
             json_encode($data)
         );
     }

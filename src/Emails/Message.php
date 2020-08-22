@@ -22,8 +22,7 @@ class Message
         string $subject,
         string $htmlBody,
         string $textBody
-    )
-    {
+    ) {
         $this->raw = $raw;
         $this->sender = $sender;
         $this->recipients = $recipients;

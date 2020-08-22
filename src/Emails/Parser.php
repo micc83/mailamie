@@ -4,7 +4,8 @@ namespace Mailamie\Emails;
 
 use ZBateson\MailMimeParser\Header\Part\AddressPart;
 
-class Parser {
+class Parser
+{
     public function parse(string $content): Message
     {
         $message = \ZBateson\MailMimeParser\Message::from($content);
@@ -15,7 +16,7 @@ class Parser {
             array_map(function (AddressPart $addressPart) {
                 $name = $addressPart->getName();
                 $email = $addressPart->getValue();
-                if ($name){
+                if ($name) {
                     return "{$name} <{$email}>";
                 }
                 return $email;

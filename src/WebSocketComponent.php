@@ -12,7 +12,7 @@ use SplObjectStorage;
 class WebSocketComponent implements MessageComponentInterface
 {
     /**
-     * @var SplObjectStorage<ConnectionInterface>
+     * @var SplObjectStorage
      */
     protected SplObjectStorage $clients;
     private Store $store;
@@ -33,24 +33,24 @@ class WebSocketComponent implements MessageComponentInterface
         });
     }
 
-    function onOpen(ConnectionInterface $conn)
+    public function onOpen(ConnectionInterface $conn)
     {
         $this->clients->attach($conn);
     }
 
-    function onClose(ConnectionInterface $conn)
+    public function onClose(ConnectionInterface $conn)
     {
         $this->clients->detach($conn);
     }
 
-    function onError(ConnectionInterface $conn, Exception $e)
+    public function onError(ConnectionInterface $conn, Exception $e)
     {
         echo "An error has occurred: {$e->getMessage()}\n";
 
         $conn->close();
     }
 
-    function onMessage(ConnectionInterface $from, $msg)
+    public function onMessage(ConnectionInterface $from, $msg)
     {
         // ..
     }

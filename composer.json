@@ -12,6 +12,11 @@
     "ext-json": "*",
     "cboden/ratchet": "^0.4.3"
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
   "autoload": {
     "psr-4": {
       "Mailamie\\": "src/"
@@ -23,5 +28,11 @@
       "name": "Alessandro Benoit",
       "email": "micc83@gmail.com"
     }
-  ]
+  ],
+  "require-dev": {
+    "phpstan/phpstan": "^0.12.38",
+    "squizlabs/php_codesniffer": "*",
+    "friendsofphp/php-cs-fixer": "^2.16",
+    "phpunit/phpunit": "^9"
+  }
 }
