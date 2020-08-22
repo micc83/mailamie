@@ -13,11 +13,13 @@ class WebSocketServer
 {
     private StreamSelectLoop $loop;
     private Store $store;
+    private string $host;
 
-    public function __construct(StreamSelectLoop $loop, Store $store)
+    public function __construct(string $host, StreamSelectLoop $loop, Store $store)
     {
         $this->loop = $loop;
         $this->store = $store;
+        $this->host = $host;
     }
 
     public function start()
@@ -28,7 +30,7 @@ class WebSocketServer
                     new WebSocketComponent($this->store)
                 )
             ),
-            new Server('127.0.0.1:1338', $this->loop),
+            new Server($this->host, $this->loop),
             $this->loop
         );
     }

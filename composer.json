@@ -3,13 +3,15 @@
   "description": "Test SMTP mail server",
   "type": "project",
   "require": {
+    "php": "^7.4",
+    "ext-fileinfo": "*",
+    "ext-mbstring": "*",
+    "ext-json": "*",
     "react/react": "^1.1",
     "phpmailer/phpmailer": "^6.1",
     "zbateson/mail-mime-parser": "^1.2",
     "symfony/console": "^5.1",
     "symfony/event-dispatcher": "^5.1",
-    "ext-mbstring": "*",
-    "ext-json": "*",
     "cboden/ratchet": "^0.4.3"
   },
   "autoload-dev": {

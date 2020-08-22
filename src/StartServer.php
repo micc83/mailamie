@@ -11,11 +11,6 @@ use Mailamie\Events\Message;
 use Mailamie\Events\Request;
 use Mailamie\Events\Response;
 use Mailamie\Events\ServerStarted;
-use Ratchet\ConnectionInterface;
-use Ratchet\Http\HttpServer;
-use Ratchet\MessageComponentInterface;
-use Ratchet\Server\IoServer;
-use Ratchet\WebSocket\WsServer;
 use React\EventLoop\Factory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -30,6 +25,13 @@ class StartServer extends Command
     use Helpers;
 
     protected static $defaultName = 'start-server';
+    private Config $config;
+
+    public function __construct(Config $config)
+    {
+        parent::__construct();
+        $this->config = $config;
+    }
 
     protected function configure()
     {
@@ -59,9 +61,17 @@ class StartServer extends Command
 
         $messageStore = new MessageStore();
 
-        $webServer = new WebServer($loop, $messageStore);
+        $webServer = new WebServer(
+            $this->config->get('web.host'),
+            $loop,
+            $messageStore
+        );
 
-        $websocketServer = new WebSocketServer($loop, $messageStore);
+        $websocketServer = new WebSocketServer(
+            $this->config->get('websocket.host'),
+            $loop,
+            $messageStore
+        );
 
         $this->registerEventListenersOn($dispatcher, $messageStore);
 
@@ -82,7 +92,7 @@ class StartServer extends Command
             $this->writeInfoBlockOn(
                 $startingSection,
                 '✓ SERVER UP AND RUNNING',
-                "Listening on {$event->host}"
+                "SMTP listening on {$event->host}\n  Web interface at http://{$this->config->get('web.host')}"
             );
         });
 
@@ -126,7 +136,8 @@ class StartServer extends Command
 
     private function getHost(): string
     {
-        return (string)$this->getInput()->getOption('host');
+        return (string)$this->getInput()->getOption('host')
+            ?: $this->config->get('smtp.host');
     }
 
     private function startingBanner(): ConsoleSectionOutput

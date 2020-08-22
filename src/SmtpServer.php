@@ -14,7 +14,6 @@ class SmtpServer
     private string $host;
     private EventDispatcherInterface $events;
 
-    const DEFAULT_HOST = '127.0.0.1:8025';
     /**
      * @var StreamSelectLoop
      */
@@ -22,7 +21,7 @@ class SmtpServer
 
     public function __construct(string $host, StreamSelectLoop $loop, EventDispatcherInterface $events)
     {
-        $this->host = $host ?: static::DEFAULT_HOST;
+        $this->host = $host;
         $this->events = $events;
         $this->loop = $loop;
     }
