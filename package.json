@@ -30,6 +30,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "cross-env": "^7.0",
+    "laravel-mix-svg-vue": "^0.2.6",
     "vue": "^2.6.11"
   }
 }

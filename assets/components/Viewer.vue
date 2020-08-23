@@ -1,8 +1,8 @@
 <template>
   <div class="message-body">
-    <iframe v-if="isHtml" :srcdoc="message.html"></iframe>
-    <pre v-if="isText">{{ message.text }}</pre>
-    <pre v-if="isRaw">{{ message.raw }}</pre>
+    <iframe v-if="view === HTML" :srcdoc="message.html"></iframe>
+    <pre v-if="view === TEXT">{{ message.text }}</pre>
+    <pre v-if="view === RAW">{{ message.raw }}</pre>
   </div>
 </template>
 
@@ -10,21 +10,15 @@
 import {HTML, RAW, TEXT} from './MainMenu';
 
 export default {
+  created() {
+    this.HTML = HTML;
+    this.RAW = RAW;
+    this.TEXT = TEXT;
+  },
   props: [
     'view',
     'message'
-  ],
-  computed: {
-    isHtml() {
-      return this.view === HTML;
-    },
-    isText() {
-      return this.view === TEXT;
-    },
-    isRaw() {
-      return this.view === RAW;
-    }
-  }
+  ]
 }
 </script>
 
@@ -32,6 +26,9 @@ export default {
 .message-body {
   height: 100%;
   padding: 1rem;
+}
+iframe {
+  border: none;
 }
 iframe, pre {
   width: 100%;

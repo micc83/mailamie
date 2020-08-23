@@ -21,6 +21,14 @@ class Parser
                 }
                 return $email;
             }, $message->getHeader('to')->getAddresses()),
+            array_map(function (AddressPart $addressPart) {
+                $name = $addressPart->getName();
+                $email = $addressPart->getValue();
+                if ($name) {
+                    return "{$name} <{$email}>";
+                }
+                return $email;
+            }, $message->getHeader('cc')->getAddresses()),
             $message->getHeaderValue('subject'),
             $message->getHtmlContent(),
             $message->getTextContent(),

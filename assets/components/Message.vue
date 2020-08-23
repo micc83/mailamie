@@ -25,35 +25,34 @@ export default {
 
 <style scoped>
 .message-created-at {
-  float: right;
-  color: #6c757d;
+  color: var(--muted-color);
   font-size: 0.8rem;
 }
 
 .message-subject {
   display: block;
-  color: #4b7ed6;
+  color: var(--main-color);
 }
 
 .message {
   cursor: pointer;
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid var(--border-color);
   padding: 1rem;
 }
 
 .message:hover {
-  background: #fafafa;
+  background: var(--background-color);
 }
 
 .active {
-  background: aliceblue !important;
+  background: var(--ultralight-color) !important;
 }
 
 .active .message-subject {
-  color: #4b7ed6;
+  color: var(--main-color);
 }
 
 .label {
-  color: #6c757d;
+  color: var(--muted-color);
 }
 </style>

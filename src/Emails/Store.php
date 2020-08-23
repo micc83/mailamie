@@ -52,7 +52,21 @@ class Store
                 'subject'    => $message->subject,
                 'created_at' => $message->created_at->format('Y-m-d H:i:s')
             ];
-        }, $this->messages));
+        }, $this->sortedByDate()));
+    }
+
+    /**
+     * @return Message[]
+     */
+    private function sortedByDate(): array
+    {
+        $messages = $this->messages;
+
+        usort($messages, function (Message $a, Message $b) {
+            return $a->created_at->getTimestamp() < $b->created_at->getTimestamp() ? 1 : -1;
+        });
+
+        return $this->messages;
     }
 
     public function onNewMessage(Closure $callback)

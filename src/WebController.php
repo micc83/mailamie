@@ -35,7 +35,7 @@ class WebController
                 return $this->handleStaticFile($path);
             }
         } catch (Throwable $e) {
-            $this->serverError($e);
+            return $this->serverError($e);
         }
 
         return $this->fileNotFoundError();
@@ -44,7 +44,7 @@ class WebController
     private function convertToPublicPath(string $originalPath): string
     {
         $path = $originalPath === '/' ? '/index.php' : $originalPath;
-        return "public" . DIRECTORY_SEPARATOR . $path;
+        return "public" . $path;
     }
 
     private function handleApiCall(ServerRequestInterface $request): Response
@@ -70,9 +70,25 @@ class WebController
     {
         return new Response(
             200,
-            ['Content-Type' => mime_content_type($path)],
+            ['Content-Type' => $this->getMimeType($path)],
             file_get_contents($path)
         );
+    }
+
+    private function getMimeType($path): string
+    {
+        $mimeTypes = [
+            'css' => 'text/css',
+            'js'  => 'text/javascript'
+        ];
+
+        foreach ($mimeTypes as $ext => $type) {
+            if (static::endsWith($path, ".{$ext}")) {
+                return $type;
+            }
+        }
+
+        return mime_content_type($path);
     }
 
     private function handlePhpFile(string $path)

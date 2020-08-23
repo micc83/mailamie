@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex">
+  <div class="app">
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -14,7 +14,7 @@
     <div class="viewer-container">
 
       <template v-if="message && !loading">
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar">
           <message-headers :message="message"/>
           <main-menu :view.sync="view"/>
         </nav>
@@ -22,9 +22,7 @@
         <viewer :view="view" :message="message"/>
       </template>
 
-      <div v-if="!message && !loading" class="p-3">
-        Waiting for messages...
-      </div>
+      <waiter v-if="!message && !loading"/>
 
       <loader v-if="loading"/>
 
@@ -38,6 +36,7 @@ import MainMenu, {HTML} from "./MainMenu"
 import MessageHeaders from "./MessageHeaders";
 import Message from "./Message"
 import Viewer from "./Viewer";
+import Waiter from "./Waiter";
 
 export default {
   components: {
@@ -45,7 +44,8 @@ export default {
     Loader,
     MainMenu,
     Message,
-    Viewer
+    Viewer,
+    Waiter
   },
   async created() {
     new WebSocket("ws://localhost:1338").onmessage = event => {
@@ -83,13 +83,13 @@ export default {
 </script>
 
 <style>
-.d-flex {
+.app {
   display: flex;
 }
 
 .sidebar {
   max-width: 350px;
-  border-right: 1px solid #dee2e6;
+  border-right: 1px solid var(--border-color);
 }
 
 .viewer-container, .sidebar {
@@ -105,12 +105,12 @@ export default {
 }
 
 .navbar {
-  padding-right: .5rem !important;
-  padding-left: .5rem !important;
-  width: 100%;
+  padding-right: .5rem;
+  padding-left: .5rem;
   justify-content: space-between;
   display: flex;
-  background-color: #f8f9fa !important;
-  flex-wrap: nowrap !important;
+  background-color: var(--main-color);
+  flex-wrap: nowrap;
+  color: var(--white);
 }
 </style>

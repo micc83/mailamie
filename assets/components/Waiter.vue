@@ -1,12 +1,12 @@
 <template>
-  <div class="loader">
-    <svg-vue icon="loading" fill="currentColor"></svg-vue>
-    <div class="loading-text">Loading...</div>
+  <div class="waiter">
+    <svg-vue icon="waiting" fill="currentColor"></svg-vue>
+    <div class="waiting-text">Waiting for incoming emails...</div>
   </div>
 </template>
 
 <style scoped>
-.loader {
+.waiter {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -21,7 +21,7 @@ svg {
   width: 100px;
 }
 
-.loading-text {
+.waiting-text {
   color: var(--light-color);
   font-size: 18px;
   font-weight: 600;
