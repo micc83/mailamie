@@ -8,15 +8,18 @@
     - [ ] Email/MessageTest
     - [ ] Email/ParserTest
     - [ ] Email/StoreTest
+    - [ ] WebControllerTest
 - [ ] Load only needed React modules
 - [ ] Add versioning for JS files update -> Use index.php
 - [ ] Add github actions
 - [ ] Add git hooks
 - [ ] Add coverage
 - [ ] Pass static analysis
-- [x] Fix issue with disconnected sockets X
-- [x] Separate vue app into components X
-- [x] Fix layout of the page X
-- [x] Remove bootstrap X
+- [ ] Update favicon+
+- [ ] Add bin for global install
+- [x] Fix issue with disconnected sockets
+- [x] Separate vue app into components
+- [x] Fix layout of the page
+- [x] Remove bootstrap
 - [x] Add static analysis
 - [x] Add config file
