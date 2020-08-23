@@ -41,6 +41,11 @@ class Message
         $this->id = $id;
     }
 
+    public function getExcerpt()
+    {
+        return mb_strimwidth(strip_tags($this->htmlBody) ?: $this->textBody, 0, 30);
+    }
+
     public function toArray(): array
     {
         return [

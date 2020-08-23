@@ -15,7 +15,7 @@ class WebSocketComponentTest extends TestCase
     {
         $store = new Store();
         $websocket = new WebSocketComponent($store);
-        $message = new Message('','',[],'','','');
+        $message = new Message('','',[],[],'','','');
 
         $connection = $this->createMock(ConnectionInterface::class);
 

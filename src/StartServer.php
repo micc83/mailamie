@@ -118,19 +118,18 @@ class StartServer extends Command
 
         $this->writeFormatted(
             'MESSAGE',
-            "<options=bold>Yurray, you got a new message!</>",
+            "<options=bold>Hurray, you got a new message!</>",
             'green'
         );
 
         $this->writeTable([
-            ['ID', $email->id],
+            ['Date', $email->created_at->format('Y-m-d H:i:s')],
             ['From', $email->sender],
             ['To', implode("; ", $email->recipients)],
-            ['Cc', implode("; ", $email->recipients)],
+            ['Cc', implode("; ", $email->ccs)],
             ['Bcc', implode("; ", $email->recipients)],
-            ['Subject', $email->subject],
-            ['Excerpt', 'Lorem ipsum dolet lorym ...'],
-            ['Preview', '<href=https://symfony.com>https://symfony.com</>']
+            ['Subject', "<options=bold>{$email->subject}</>"],
+            ['Excerpt', $email->getExcerpt()],
         ]);
     }
 
