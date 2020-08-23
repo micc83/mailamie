@@ -1,0 +1,22 @@
+- [ ] Handle attachments
+- [ ] Add missing data
+    - [ ] Bcc
+    - [x] Cc
+    - [ ] Reply-To
+- [ ] Write missing tests
+    - [ ] SmtpConnectionTest
+    - [ ] Email/MessageTest
+    - [ ] Email/ParserTest
+    - [ ] Email/StoreTest
+- [ ] Load only needed React modules
+- [ ] Add versioning for JS files update -> Use index.php
+- [ ] Add github actions
+- [ ] Add git hooks
+- [ ] Add coverage
+- [ ] Pass static analysis
+- [x] Fix issue with disconnected sockets X
+- [x] Separate vue app into components X
+- [x] Fix layout of the page X
+- [x] Remove bootstrap X
+- [x] Add static analysis
+- [x] Add config file
