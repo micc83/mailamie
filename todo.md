@@ -14,7 +14,7 @@
 - [ ] Add license
 - [x] Check different color scheme
 - [x] Fix issue with pre height + overflow: auto
-- [x] Fix issue with top right menu position on scroll 
+- [ ] Fix issue with top right menu position on show more
 - [x] Check name is free
 - [x] Handle attachments
 - [x] Add missing data
