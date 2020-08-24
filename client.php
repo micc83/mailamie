@@ -20,6 +20,8 @@ try {
     $mail->addReplyTo('info@example.com', 'Information');
     $mail->addCC('cc@example.com');
     $mail->addBCC('bcc@example.com');
+    $mail->addBCC('pinco@example.com', 'Pinco');
+    $mail->addStringAttachment("My file attachment....", 'vouchers.txt');
 
     $mail->Subject = 'Here is the subject, welcome to New york!';
     $mail->Body    = 'This is the HTML message body <b>in bold!</b>';

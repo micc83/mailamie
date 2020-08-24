@@ -1,8 +1,4 @@
-- [ ] Handle attachments
-- [ ] Add missing data
-    - [ ] Bcc
-    - [x] Cc
-    - [ ] Reply-To
+# ToDo
 - [ ] Write missing tests
     - [ ] SmtpConnectionTest
     - [ ] Email/MessageTest
@@ -10,13 +6,20 @@
     - [ ] Email/StoreTest
     - [ ] WebControllerTest
 - [ ] Load only needed React modules
-- [ ] Add versioning for JS files update -> Use index.php
 - [ ] Add github actions
 - [ ] Add git hooks
 - [ ] Add coverage
 - [ ] Pass static analysis
-- [ ] Update favicon+
 - [ ] Add bin for global install
+- [x] Handle attachments
+- [x] Add missing data
+    - [x] Bcc
+    - [x] Cc
+    - [x] Reply-To
+- [x] Add versioning for JS files update -> Use index.php
+- [x] Update favicon
+- [x] Add changelog
+- [x] Add cache for static assets
 - [x] Fix issue with disconnected sockets
 - [x] Separate vue app into components
 - [x] Fix layout of the page

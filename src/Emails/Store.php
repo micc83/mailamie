@@ -17,17 +17,13 @@ class Store
      */
     private array $callbacks = [];
 
-    public function store(Message $message): string
+    public function store(Message $message): void
     {
-        $id = (string)uniqid();
-        $message->setId($id);
-        $this->messages[$id] = $message;
+        $this->messages[$message->id] = $message;
 
         foreach ($this->callbacks as $callback) {
             $callback($message);
         }
-
-        return $id;
     }
 
     public function get(string $id): Message
@@ -66,7 +62,7 @@ class Store
             return $a->created_at->getTimestamp() < $b->created_at->getTimestamp() ? 1 : -1;
         });
 
-        return $this->messages;
+        return $messages;
     }
 
     public function onNewMessage(Closure $callback)

@@ -20,8 +20,14 @@
           <div class="header-item">
             <span class="label">From:</span> {{ message.from }}
           </div>
-          <div class="header-item">
+          <div class="header-item" v-if="message.reply_to">
+            <span class="label">Reply-To:</span> {{ message.reply_to }}
+          </div>
+          <div class="header-item" v-if="message.ccs.length">
             <span class="label">Cc:</span> {{ message.ccs.join(', ') }}
+          </div>
+          <div class="header-item" v-if="message.bccs.length">
+            <span class="label">Bcc:</span> {{ message.bccs.join(', ') }}
           </div>
         </div>
       </div>

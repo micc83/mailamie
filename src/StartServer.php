@@ -63,6 +63,7 @@ class StartServer extends Command
 
         $webServer = new WebServer(
             $this->config->get('web.host'),
+            $this->config->get('version'),
             $loop,
             $messageStore
         );
@@ -113,7 +114,7 @@ class StartServer extends Command
     {
         $parser = new Parser();
 
-        $email = $parser->parse($message->body);
+        $email = $parser->parse($message->body, $message->recipients);
         $messageStore->store($email);
 
         $this->writeFormatted(
@@ -122,15 +123,7 @@ class StartServer extends Command
             'green'
         );
 
-        $this->writeTable([
-            ['Date', $email->created_at->format('Y-m-d H:i:s')],
-            ['From', $email->sender],
-            ['To', implode("; ", $email->recipients)],
-            ['Cc', implode("; ", $email->ccs)],
-            ['Bcc', implode("; ", $email->recipients)],
-            ['Subject', "<options=bold>{$email->subject}</>"],
-            ['Excerpt', $email->getExcerpt()],
-        ]);
+        $this->writeTable($email->toTable());
     }
 
     private function getHost(): string

@@ -26,16 +26,17 @@ class SmtpConnection
      * @var array<int,string>
      */
     private static array $statusDescriptions = [
-        self::READY => 'Service ready',
-        self::OK => 'OK',
-        self::CLOSING => 'Service closing transmission channel',
+        self::READY            => 'Service ready',
+        self::OK               => 'OK',
+        self::CLOSING          => 'Service closing transmission channel',
         self::START_MAIL_INPUT => 'Start mail input; end with <CRLF>.<CRLF>'
     ];
 
     public function __construct(
         ConnectionInterface $connection,
         EventDispatcherInterface $events
-    ) {
+    )
+    {
         $this->connection = $connection;
         $this->events = $events;
     }
@@ -76,7 +77,7 @@ class SmtpConnection
 
     private function addRecipient(string $recipient): void
     {
-        $this->recipients[] = $recipient;
+        $this->recipients[] = preg_replace('/^RCPT TO:<(.*)>/', '$1', $recipient);
     }
 
     private function addToMessageBody(string $content): void

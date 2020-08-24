@@ -708,6 +708,7 @@ var map = {
 	"./attachments.svg": "./assets/icons/attachments.svg",
 	"./caret-down.svg": "./assets/icons/caret-down.svg",
 	"./caret-up.svg": "./assets/icons/caret-up.svg",
+	"./download.svg": "./assets/icons/download.svg",
 	"./html.svg": "./assets/icons/html.svg",
 	"./loading.svg": "./assets/icons/loading.svg",
 	"./menu.svg": "./assets/icons/menu.svg",
@@ -774,6 +775,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<svg viewBox=\"0 0 16 16\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 00.753-1.659l-4.796-5.48a1 1 0 00-1.506 0z\"/></svg>");
+
+/***/ }),
+
+/***/ "./assets/icons/download.svg":
+/*!***********************************!*\
+  !*** ./assets/icons/download.svg ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<svg viewBox=\"0 0 16 16\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M4 1h5v1H4a1 1 0 00-1 1v10a1 1 0 001 1h8a1 1 0 001-1V6h1v7a2 2 0 01-2 2H4a2 2 0 01-2-2V3a2 2 0 012-2z\"/><path d=\"M9 4.5V1l5 5h-3.5A1.5 1.5 0 019 4.5z\"/><path fill-rule=\"evenodd\" d=\"M5.646 9.146a.5.5 0 01.708 0L8 10.793l1.646-1.647a.5.5 0 01.708.708l-2 2a.5.5 0 01-.708 0l-2-2a.5.5 0 010-.708z\"/><path fill-rule=\"evenodd\" d=\"M8 6a.5.5 0 01.5.5v4a.5.5 0 01-1 0v-4A.5.5 0 018 6z\"/></svg>");
 
 /***/ }),
 
@@ -2878,11 +2892,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var HTML = 'html';
 var RAW = 'raw';
 var TEXT = 'text';
+Vue.directive('click-outside', {
+  bind: function bind(el, binding, vnode) {
+    el.clickOutsideEvent = function (event) {
+      if (!(el == event.target || el.contains(event.target))) {
+        vnode.context[binding.expression](event);
+      }
+    };
+
+    document.body.addEventListener('click', el.clickOutsideEvent);
+  },
+  unbind: function unbind(el) {
+    document.body.removeEventListener('click', el.clickOutsideEvent);
+  }
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['view'],
+  props: ['view', 'message'],
   created: function created() {
     this.HTML = HTML;
     this.RAW = RAW;
@@ -2890,13 +2928,26 @@ var TEXT = 'text';
   },
   data: function data() {
     return {
-      showMenu: false
+      showMenu: false,
+      showAttachments: false
     };
   },
   methods: {
     setView: function setView(view) {
       this.showMenu = false;
       this.$emit('update:view', view);
+    },
+    toggleMenu: function toggleMenu() {
+      this.showMenu = !this.showMenu;
+      this.showAttachments = false;
+    },
+    toggleAttachments: function toggleAttachments() {
+      this.showAttachments = !this.showAttachments;
+      this.showMenu = false;
+    },
+    onClickOutside: function onClickOutside() {
+      this.showMenu = false;
+      this.showAttachments = false;
     }
   }
 });
@@ -2946,6 +2997,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3073,7 +3130,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.main-menu[data-v-ffccb29a] {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n.nav-link[data-v-ffccb29a] {\n  display: inline-block;\n  padding: 10px;\n  color: var(--white);\n}\n.dropdown-menu-container[data-v-ffccb29a] {\n  display: inline-block;\n}\n.dropdown-menu[data-v-ffccb29a] {\n  padding-left: 0;\n  position: absolute;\n  width: 200px;\n  right: 0;\n  background: var(--background-color);\n  border-left: 1px solid var(--border-color);\n  border-right: 1px solid var(--border-color);\n}\n.dropdown-menu li[data-v-ffccb29a] {\n  list-style: none;\n  padding: 0;\n  line-height: 1rem;\n}\n.dropdown-item[data-v-ffccb29a] {\n  text-decoration: none;\n  color: var(--black);\n  padding: 0.6rem;\n  border-bottom: 1px solid var(--border-color);\n  display: block;\n}\n.dropdown-menu svg[data-v-ffccb29a] {\n  margin: 0 0.5rem 0 0.2rem;\n  color: #4b7ed6;\n  vertical-align: middle;\n}\n", ""]);
+exports.push([module.i, "\n.main-menu[data-v-ffccb29a] {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n.nav-link[data-v-ffccb29a] {\n  display: inline-block;\n  padding: 10px;\n  color: var(--white);\n}\n.dropdown-menu-container[data-v-ffccb29a] {\n  display: inline-block;\n}\n.dropdown-menu[data-v-ffccb29a] {\n  padding-left: 0;\n  position: absolute;\n  width: 200px;\n  right: 0;\n  background: var(--background-color);\n  border-left: 1px solid var(--border-color);\n  border-right: 1px solid var(--border-color);\n}\n.dropdown-menu li[data-v-ffccb29a] {\n  list-style: none;\n  padding: 0;\n  line-height: 1rem;\n}\n.dropdown-item[data-v-ffccb29a] {\n  text-decoration: none;\n  color: var(--black);\n  padding: 0.6rem;\n  border-bottom: 1px solid var(--border-color);\n  display: block;\n}\n.dropdown-item[data-v-ffccb29a]:hover {\n  background-color: var(--ultralight-color);\n}\n.dropdown-menu svg[data-v-ffccb29a] {\n  margin: 0 0.5rem 0 0.2rem;\n  color: #4b7ed6;\n  vertical-align: middle;\n}\n", ""]);
 
 // exports
 
@@ -5250,7 +5307,7 @@ var render = function() {
                   _c("message-headers", { attrs: { message: _vm.message } }),
                   _vm._v(" "),
                   _c("main-menu", {
-                    attrs: { view: _vm.view },
+                    attrs: { view: _vm.view, message: _vm.message },
                     on: {
                       "update:view": function($event) {
                         _vm.view = $event
@@ -5328,129 +5385,195 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "main-menu" }, [
-    _c("div", [
-      _c(
-        "a",
-        { staticClass: "nav-link", attrs: { href: "#" } },
-        [
-          _c("svg-vue", {
-            attrs: { icon: "attachments", fill: "currentColor" }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "dropdown-menu-container" }, [
-        _c(
-          "a",
-          {
-            staticClass: "nav-link",
-            attrs: { href: "#" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.showMenu = !_vm.showMenu
-              }
-            }
-          },
-          [_c("svg-vue", { attrs: { icon: "menu", fill: "currentColor" } })],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "ul",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.showMenu,
-                expression: "showMenu"
-              }
-            ],
-            staticClass: "dropdown-menu"
-          },
-          [
-            _c("li", [
-              _vm.view !== _vm.HTML
-                ? _c(
-                    "a",
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "click-outside",
+          rawName: "v-click-outside",
+          value: _vm.onClickOutside,
+          expression: "onClickOutside"
+        }
+      ],
+      staticClass: "main-menu"
+    },
+    [
+      _c("div", [
+        _vm.message.attachments.length
+          ? _c("div", { staticClass: "dropdown-menu-container" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.toggleAttachments($event)
+                    }
+                  }
+                },
+                [
+                  _c("svg-vue", {
+                    attrs: { icon: "attachments", fill: "currentColor" }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "ul",
+                {
+                  directives: [
                     {
-                      staticClass: "dropdown-item",
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.setView(_vm.HTML)
-                        }
-                      }
-                    },
-                    [
-                      _c("svg-vue", {
-                        attrs: { icon: "html", fill: "currentColor" }
-                      }),
-                      _vm._v("\n            Html Version\n          ")
-                    ],
-                    1
-                  )
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _vm.view !== _vm.TEXT
-                ? _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-item",
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.setView(_vm.TEXT)
-                        }
-                      }
-                    },
-                    [
-                      _c("svg-vue", {
-                        attrs: { icon: "text", fill: "currentColor" }
-                      }),
-                      _vm._v("\n            Text Version\n          ")
-                    ],
-                    1
-                  )
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _vm.view !== _vm.RAW
-                ? _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-item",
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.setView(_vm.RAW)
-                        }
-                      }
-                    },
-                    [
-                      _c("svg-vue", {
-                        attrs: { icon: "raw", fill: "currentColor" }
-                      }),
-                      _vm._v("\n            Raw Version\n          ")
-                    ],
-                    1
-                  )
-                : _vm._e()
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.showAttachments,
+                      expression: "showAttachments"
+                    }
+                  ],
+                  staticClass: "dropdown-menu"
+                },
+                _vm._l(_vm.message.attachments, function(attachment) {
+                  return _c("li", [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: { href: attachment.url, target: "_blank" },
+                        on: { click: _vm.toggleAttachments }
+                      },
+                      [
+                        _c("svg-vue", {
+                          attrs: { icon: "download", fill: "currentColor" }
+                        }),
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(attachment.name) +
+                            "\n          "
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                }),
+                0
+              )
             ])
-          ]
-        )
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "dropdown-menu-container" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.toggleMenu($event)
+                }
+              }
+            },
+            [_c("svg-vue", { attrs: { icon: "menu", fill: "currentColor" } })],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "ul",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.showMenu,
+                  expression: "showMenu"
+                }
+              ],
+              staticClass: "dropdown-menu"
+            },
+            [
+              _c("li", [
+                _vm.view !== _vm.HTML
+                  ? _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.setView(_vm.HTML)
+                          }
+                        }
+                      },
+                      [
+                        _c("svg-vue", {
+                          attrs: { icon: "html", fill: "currentColor" }
+                        }),
+                        _vm._v("\n            Html Version\n          ")
+                      ],
+                      1
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _vm.view !== _vm.TEXT
+                  ? _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.setView(_vm.TEXT)
+                          }
+                        }
+                      },
+                      [
+                        _c("svg-vue", {
+                          attrs: { icon: "text", fill: "currentColor" }
+                        }),
+                        _vm._v("\n            Text Version\n          ")
+                      ],
+                      1
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _vm.view !== _vm.RAW
+                  ? _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.setView(_vm.RAW)
+                          }
+                        }
+                      },
+                      [
+                        _c("svg-vue", {
+                          attrs: { icon: "raw", fill: "currentColor" }
+                        }),
+                        _vm._v("\n            Raw Version\n          ")
+                      ],
+                      1
+                    )
+                  : _vm._e()
+              ])
+            ]
+          )
+        ])
       ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -5563,10 +5686,30 @@ var render = function() {
               _vm._v(" " + _vm._s(_vm.message.from) + "\n        ")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "header-item" }, [
-              _c("span", { staticClass: "label" }, [_vm._v("Cc:")]),
-              _vm._v(" " + _vm._s(_vm.message.ccs.join(", ")) + "\n        ")
-            ])
+            _vm.message.reply_to
+              ? _c("div", { staticClass: "header-item" }, [
+                  _c("span", { staticClass: "label" }, [_vm._v("Reply-To:")]),
+                  _vm._v(" " + _vm._s(_vm.message.reply_to) + "\n        ")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.message.ccs.length
+              ? _c("div", { staticClass: "header-item" }, [
+                  _c("span", { staticClass: "label" }, [_vm._v("Cc:")]),
+                  _vm._v(
+                    " " + _vm._s(_vm.message.ccs.join(", ")) + "\n        "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.message.bccs.length
+              ? _c("div", { staticClass: "header-item" }, [
+                  _c("span", { staticClass: "label" }, [_vm._v("Bcc:")]),
+                  _vm._v(
+                    " " + _vm._s(_vm.message.bccs.join(", ")) + "\n        "
+                  )
+                ])
+              : _vm._e()
           ])
         : _vm._e()
     ])
@@ -17786,7 +17929,7 @@ module.exports = g;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/micc83/repositories/mailamie/assets/app.js */"./assets/app.js");
+module.exports = __webpack_require__(/*! /Users/micc83/Repositories/mailamie/assets/app.js */"./assets/app.js");
 
 
 /***/ })

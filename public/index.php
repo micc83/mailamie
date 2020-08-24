@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="app.css">
-    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" type="text/css" href="app.css?v=<?= $this->version ?>">
+    <link rel="icon" href="favicon.svg?v=<?= $this->version ?>" type="image/x-icon">
 
     <title>Mailamie - Catch all SMTP server</title>
 </head>
@@ -15,7 +15,7 @@
     <app></app>
 </div>
 
-<script src="app.js"></script>
+<script src="app.js?v=<?= $this->version ?>"></script>
 
 </body>
 </html>

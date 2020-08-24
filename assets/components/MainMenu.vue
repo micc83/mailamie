@@ -1,11 +1,21 @@
 <template>
-  <div class="main-menu">
+  <div class="main-menu" v-click-outside="onClickOutside">
     <div>
-      <a class="nav-link" href="#">
-        <svg-vue icon="attachments" fill="currentColor"></svg-vue>
-      </a>
+      <div class="dropdown-menu-container" v-if="message.attachments.length">
+        <a class="nav-link" href="#" @click.prevent="toggleAttachments">
+          <svg-vue icon="attachments" fill="currentColor"></svg-vue>
+        </a>
+        <ul class="dropdown-menu" v-show="showAttachments">
+          <li v-for="attachment in message.attachments">
+            <a class="dropdown-item" :href="attachment.url" target="_blank" @click="toggleAttachments">
+              <svg-vue icon="download" fill="currentColor"></svg-vue>
+              {{ attachment.name }}
+            </a>
+          </li>
+        </ul>
+      </div>
       <div class="dropdown-menu-container">
-        <a class="nav-link" href="#" @click.prevent="showMenu = !showMenu">
+        <a class="nav-link" href="#" @click.prevent="toggleMenu">
           <svg-vue icon="menu" fill="currentColor"></svg-vue>
         </a>
         <ul class="dropdown-menu" v-show="showMenu">
@@ -38,8 +48,22 @@ export const HTML = 'html';
 export const RAW = 'raw';
 export const TEXT = 'text';
 
+Vue.directive('click-outside', {
+  bind: function (el, binding, vnode) {
+    el.clickOutsideEvent = function (event) {
+      if (!(el == event.target || el.contains(event.target))) {
+        vnode.context[binding.expression](event);
+      }
+    };
+    document.body.addEventListener('click', el.clickOutsideEvent)
+  },
+  unbind: function (el) {
+    document.body.removeEventListener('click', el.clickOutsideEvent)
+  },
+});
+
 export default {
-  props: ['view'],
+  props: ['view', 'message'],
   created() {
     this.HTML = HTML;
     this.RAW = RAW;
@@ -47,7 +71,8 @@ export default {
   },
   data() {
     return {
-      showMenu: false
+      showMenu: false,
+      showAttachments: false
     }
   },
   methods: {
@@ -55,6 +80,18 @@ export default {
       this.showMenu = false;
       this.$emit('update:view', view);
     },
+    toggleMenu(){
+      this.showMenu = !this.showMenu;
+      this.showAttachments = false;
+    },
+    toggleAttachments(){
+      this.showAttachments = !this.showAttachments;
+      this.showMenu = false;
+    },
+    onClickOutside(){
+      this.showMenu = false;
+      this.showAttachments = false;
+    }
   }
 }
 </script>
@@ -98,6 +135,10 @@ export default {
   padding: 0.6rem;
   border-bottom: 1px solid var(--border-color);
   display: block;
+}
+
+.dropdown-item:hover {
+  background-color: var(--ultralight-color);
 }
 
 .dropdown-menu svg {

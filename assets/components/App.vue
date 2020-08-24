@@ -16,7 +16,7 @@
       <template v-if="message && !loading">
         <nav class="navbar">
           <message-headers :message="message"/>
-          <main-menu :view.sync="view"/>
+          <main-menu :view.sync="view" :message="message"/>
         </nav>
 
         <viewer :view="view" :message="message"/>

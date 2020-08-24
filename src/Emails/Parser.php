@@ -3,35 +3,67 @@
 namespace Mailamie\Emails;
 
 use ZBateson\MailMimeParser\Header\Part\AddressPart;
+use ZBateson\MailMimeParser\Message as ParseMessage;
+use ZBateson\MailMimeParser\Message\Part\MessagePart;
 
 class Parser
 {
-    public function parse(string $content): Message
+    /**
+     * @param string $rawContent
+     * @param string[] $allRecipients
+     * @return Message
+     */
+    public function parse(string $rawContent, array $allRecipients = []): Message
     {
-        $message = \ZBateson\MailMimeParser\Message::from($content);
+        $message = ParseMessage::from($rawContent);
+
+        $from = $message->getHeader('from')->getRawValue();
+
+        $recipients = array_map(function (AddressPart $addressPart) {
+            $name = $addressPart->getName();
+            $email = $addressPart->getValue();
+            if ($name) {
+                return "{$name} <{$email}>";
+            }
+            return $email;
+        }, $message->getHeader('to')->getAddresses());
+
+        $ccs = array_map(function (AddressPart $addressPart) {
+            $name = $addressPart->getName();
+            $email = $addressPart->getValue();
+            if ($name) {
+                return "{$name} <{$email}>";
+            }
+            return $email;
+        }, $message->getHeader('cc')->getAddresses());
+
+        $subject = $message->getHeaderValue('subject');
+
+        $html = $message->getHtmlContent();
+        $text = $message->getTextContent();
+
+        $replyTo = $message->getHeader('reply-to')->getRawValue();
+
+        $attachments = [];
+        foreach ($message->getAllAttachmentParts() as $part) {
+            $attachments[] = new Attachment(
+                $part->getFilename(),
+                $part->getContent(),
+                $part->getContentType()
+            );
+        }
 
         return new Message(
-            $content,
-            $message->getHeader('from')->getRawValue(),
-            array_map(function (AddressPart $addressPart) {
-                $name = $addressPart->getName();
-                $email = $addressPart->getValue();
-                if ($name) {
-                    return "{$name} <{$email}>";
-                }
-                return $email;
-            }, $message->getHeader('to')->getAddresses()),
-            array_map(function (AddressPart $addressPart) {
-                $name = $addressPart->getName();
-                $email = $addressPart->getValue();
-                if ($name) {
-                    return "{$name} <{$email}>";
-                }
-                return $email;
-            }, $message->getHeader('cc')->getAddresses()),
-            $message->getHeaderValue('subject'),
-            $message->getHtmlContent(),
-            $message->getTextContent(),
+            $rawContent,
+            $from,
+            $recipients,
+            $ccs,
+            $subject,
+            $html,
+            $text,
+            $replyTo,
+            $allRecipients,
+            $attachments
         );
     }
 }
