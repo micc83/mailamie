@@ -71,6 +71,6 @@ export default {
 }
 
 .label {
-  color: var(--light-color);
+  color: var(--header-secondary-color);
 }
 </style>

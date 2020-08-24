@@ -89,12 +89,14 @@ export default {
 
 .sidebar {
   max-width: 350px;
-  border-right: 1px solid var(--border-color);
+  color: var(--sidebar-text-color);
+  background-color: var(--sidebar-background-color);
+  border-right: 1px solid var(--sidebar-border-color);
+  overflow: auto;
 }
 
 .viewer-container, .sidebar {
   height: 100vh !important;
-  overflow: auto;
 }
 
 .viewer-container {
@@ -102,6 +104,7 @@ export default {
   width: 100%;
   flex-direction: column;
   align-content: stretch;
+  overflow:hidden;
 }
 
 .navbar {
@@ -109,8 +112,8 @@ export default {
   padding-left: .5rem;
   justify-content: space-between;
   display: flex;
-  background-color: var(--main-color);
+  background-color: var(--header-background-color);
   flex-wrap: nowrap;
-  color: var(--white);
+  color: var(--header-text-color);
 }
 </style>

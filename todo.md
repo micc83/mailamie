@@ -11,6 +11,11 @@
 - [ ] Add coverage
 - [ ] Pass static analysis
 - [ ] Add bin for global install
+- [ ] Add license
+- [x] Check different color scheme
+- [x] Fix issue with pre height + overflow: auto
+- [x] Fix issue with top right menu position on scroll 
+- [x] Check name is free
 - [x] Handle attachments
 - [x] Add missing data
     - [x] Bcc

@@ -26,13 +26,15 @@ export default {
 .message-body {
   height: 100%;
   padding: 1rem;
+  background: var(--viewer-background-color);
+  overflow: auto;
 }
 iframe {
   border: none;
 }
 iframe, pre {
   width: 100%;
-  height: 100%;
+  height: 99%;
 }
 pre {
   white-space: pre-wrap;

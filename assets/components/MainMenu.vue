@@ -106,7 +106,7 @@ export default {
 .nav-link {
   display: inline-block;
   padding: 10px;
-  color: var(--white);
+  color: var(--header-link-color);
 }
 
 .dropdown-menu-container {
@@ -117,10 +117,11 @@ export default {
   padding-left: 0;
   position: absolute;
   width: 200px;
+  top: 59px;
   right: 0;
-  background: var(--background-color);
-  border-left: 1px solid var(--border-color);
-  border-right: 1px solid var(--border-color);
+  background: var(--dropdown-background-color);
+  border-left: 1px solid var(--dropdown-border-color);
+  border-right: 1px solid var(--dropdown-border-color);
 }
 
 .dropdown-menu li {
@@ -131,19 +132,19 @@ export default {
 
 .dropdown-item {
   text-decoration: none;
-  color: var(--black);
+  color: var(--dropdown-link-color);
   padding: 0.6rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--dropdown-border-color);
   display: block;
 }
 
 .dropdown-item:hover {
-  background-color: var(--ultralight-color);
+  background-color: var(--dropdown-hover-color);
 }
 
 .dropdown-menu svg {
   margin: 0 0.5rem 0 0.2rem;
-  color: #4b7ed6;
+  color: var(--dropdown-icon-color);
   vertical-align: middle;
 }
 </style>

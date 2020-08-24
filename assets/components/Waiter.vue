@@ -16,13 +16,13 @@
 
 svg {
   margin: 0 auto 20px;
-  color: var(--light-color);
+  color: var(--waiting-color);
   height: 100px;
   width: 100px;
 }
 
 .waiting-text {
-  color: var(--light-color);
+  color: var(--waiting-color);
   font-size: 18px;
   font-weight: 600;
 }

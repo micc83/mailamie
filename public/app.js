@@ -3092,7 +3092,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.app {\n  display: flex;\n}\n.sidebar {\n  max-width: 350px;\n  border-right: 1px solid var(--border-color);\n}\n.viewer-container, .sidebar {\n  height: 100vh !important;\n  overflow: auto;\n}\n.viewer-container {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n  align-content: stretch;\n}\n.navbar {\n  padding-right: .5rem;\n  padding-left: .5rem;\n  justify-content: space-between;\n  display: flex;\n  background-color: var(--main-color);\n  flex-wrap: nowrap;\n  color: var(--white);\n}\n", ""]);
+exports.push([module.i, "\n.app {\n  display: flex;\n}\n.sidebar {\n  max-width: 350px;\n  color: var(--sidebar-text-color);\n  background-color: var(--sidebar-background-color);\n  border-right: 1px solid var(--sidebar-border-color);\n  overflow: auto;\n}\n.viewer-container, .sidebar {\n  height: 100vh !important;\n}\n.viewer-container {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n  align-content: stretch;\n  overflow:hidden;\n}\n.navbar {\n  padding-right: .5rem;\n  padding-left: .5rem;\n  justify-content: space-between;\n  display: flex;\n  background-color: var(--header-background-color);\n  flex-wrap: nowrap;\n  color: var(--header-text-color);\n}\n", ""]);
 
 // exports
 
@@ -3111,7 +3111,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.loader[data-v-59d2a34e] {\n  display: flex;\n  justify-content: center;\n  flex-direction: column;\n  text-align: center;\n  height: 100%;\n}\nsvg[data-v-59d2a34e] {\n  margin: 0 auto 20px;\n  color: var(--light-color);\n  height: 100px;\n  width: 100px;\n}\n.loading-text[data-v-59d2a34e] {\n  color: var(--light-color);\n  font-size: 18px;\n  font-weight: 600;\n}\n", ""]);
+exports.push([module.i, "\n.loader[data-v-59d2a34e] {\n  display: flex;\n  justify-content: center;\n  flex-direction: column;\n  text-align: center;\n  height: 100%;\n}\nsvg[data-v-59d2a34e] {\n  margin: 0 auto 20px;\n  color: var(--waiting-color);\n  height: 100px;\n  width: 100px;\n}\n.loading-text[data-v-59d2a34e] {\n  color: var(--waiting-color);\n  font-size: 18px;\n  font-weight: 600;\n}\n", ""]);
 
 // exports
 
@@ -3130,7 +3130,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.main-menu[data-v-ffccb29a] {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n.nav-link[data-v-ffccb29a] {\n  display: inline-block;\n  padding: 10px;\n  color: var(--white);\n}\n.dropdown-menu-container[data-v-ffccb29a] {\n  display: inline-block;\n}\n.dropdown-menu[data-v-ffccb29a] {\n  padding-left: 0;\n  position: absolute;\n  width: 200px;\n  right: 0;\n  background: var(--background-color);\n  border-left: 1px solid var(--border-color);\n  border-right: 1px solid var(--border-color);\n}\n.dropdown-menu li[data-v-ffccb29a] {\n  list-style: none;\n  padding: 0;\n  line-height: 1rem;\n}\n.dropdown-item[data-v-ffccb29a] {\n  text-decoration: none;\n  color: var(--black);\n  padding: 0.6rem;\n  border-bottom: 1px solid var(--border-color);\n  display: block;\n}\n.dropdown-item[data-v-ffccb29a]:hover {\n  background-color: var(--ultralight-color);\n}\n.dropdown-menu svg[data-v-ffccb29a] {\n  margin: 0 0.5rem 0 0.2rem;\n  color: #4b7ed6;\n  vertical-align: middle;\n}\n", ""]);
+exports.push([module.i, "\n.main-menu[data-v-ffccb29a] {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n.nav-link[data-v-ffccb29a] {\n  display: inline-block;\n  padding: 10px;\n  color: var(--header-link-color);\n}\n.dropdown-menu-container[data-v-ffccb29a] {\n  display: inline-block;\n}\n.dropdown-menu[data-v-ffccb29a] {\n  padding-left: 0;\n  position: absolute;\n  width: 200px;\n  top: 59px;\n  right: 0;\n  background: var(--dropdown-background-color);\n  border-left: 1px solid var(--dropdown-border-color);\n  border-right: 1px solid var(--dropdown-border-color);\n}\n.dropdown-menu li[data-v-ffccb29a] {\n  list-style: none;\n  padding: 0;\n  line-height: 1rem;\n}\n.dropdown-item[data-v-ffccb29a] {\n  text-decoration: none;\n  color: var(--dropdown-link-color);\n  padding: 0.6rem;\n  border-bottom: 1px solid var(--dropdown-border-color);\n  display: block;\n}\n.dropdown-item[data-v-ffccb29a]:hover {\n  background-color: var(--dropdown-hover-color);\n}\n.dropdown-menu svg[data-v-ffccb29a] {\n  margin: 0 0.5rem 0 0.2rem;\n  color: var(--dropdown-icon-color);\n  vertical-align: middle;\n}\n", ""]);
 
 // exports
 
@@ -3149,7 +3149,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.message-created-at[data-v-ebdccd48] {\n  color: var(--muted-color);\n  font-size: 0.8rem;\n}\n.message-subject[data-v-ebdccd48] {\n  display: block;\n  color: var(--main-color);\n}\n.message[data-v-ebdccd48] {\n  cursor: pointer;\n  border-bottom: 1px solid var(--border-color);\n  padding: 1rem;\n}\n.message[data-v-ebdccd48]:hover {\n  background: var(--background-color);\n}\n.active[data-v-ebdccd48] {\n  background: var(--ultralight-color) !important;\n}\n.active .message-subject[data-v-ebdccd48] {\n  color: var(--main-color);\n}\n.label[data-v-ebdccd48] {\n  color: var(--muted-color);\n}\n", ""]);
+exports.push([module.i, "\n.message-created-at[data-v-ebdccd48] {\n  color: var(--sidebar-muted-color);\n  font-size: 0.8rem;\n}\n.message-subject[data-v-ebdccd48] {\n  display: block;\n  color: var(--sidebar-title-color);\n}\n.message[data-v-ebdccd48] {\n  cursor: pointer;\n  border-bottom: 1px solid var(--sidebar-border-color);\n  padding: 1rem;\n}\n.message[data-v-ebdccd48]:hover {\n  background: var(--sidebar-hover-color);\n}\n.active[data-v-ebdccd48] {\n  background: var(--sidebar-active-color) !important;\n}\n.label[data-v-ebdccd48] {\n  color: var(--sidebar-secondary-color);\n}\n", ""]);
 
 // exports
 
@@ -3168,7 +3168,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.headers-container[data-v-ab15688c] {\n  display: flex;\n  padding: 1rem;\n}\n.toggler[data-v-ab15688c] {\n  display: flex;\n  justify-content: center;\n  flex-direction: column;\n  width: 40px;\n  text-align: center;\n  cursor: pointer;\n}\n.header-item[data-v-ab15688c] {\n  font-size: 0.8rem;\n}\n.label[data-v-ab15688c] {\n  color: var(--light-color);\n}\n", ""]);
+exports.push([module.i, "\n.headers-container[data-v-ab15688c] {\n  display: flex;\n  padding: 1rem;\n}\n.toggler[data-v-ab15688c] {\n  display: flex;\n  justify-content: center;\n  flex-direction: column;\n  width: 40px;\n  text-align: center;\n  cursor: pointer;\n}\n.header-item[data-v-ab15688c] {\n  font-size: 0.8rem;\n}\n.label[data-v-ab15688c] {\n  color: var(--header-secondary-color);\n}\n", ""]);
 
 // exports
 
@@ -3187,7 +3187,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.message-body[data-v-109ce466] {\n  height: 100%;\n  padding: 1rem;\n}\niframe[data-v-109ce466] {\n  border: none;\n}\niframe[data-v-109ce466], pre[data-v-109ce466] {\n  width: 100%;\n  height: 100%;\n}\npre[data-v-109ce466] {\n  white-space: pre-wrap;\n}\n", ""]);
+exports.push([module.i, "\n.message-body[data-v-109ce466] {\n  height: 100%;\n  padding: 1rem;\n  background: var(--viewer-background-color);\n  overflow: auto;\n}\niframe[data-v-109ce466] {\n  border: none;\n}\niframe[data-v-109ce466], pre[data-v-109ce466] {\n  width: 100%;\n  height: 99%;\n}\npre[data-v-109ce466] {\n  white-space: pre-wrap;\n}\n", ""]);
 
 // exports
 
@@ -3206,7 +3206,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.waiter[data-v-4aa9889d] {\n  display: flex;\n  justify-content: center;\n  flex-direction: column;\n  text-align: center;\n  height: 100%;\n}\nsvg[data-v-4aa9889d] {\n  margin: 0 auto 20px;\n  color: var(--light-color);\n  height: 100px;\n  width: 100px;\n}\n.waiting-text[data-v-4aa9889d] {\n  color: var(--light-color);\n  font-size: 18px;\n  font-weight: 600;\n}\n", ""]);
+exports.push([module.i, "\n.waiter[data-v-4aa9889d] {\n  display: flex;\n  justify-content: center;\n  flex-direction: column;\n  text-align: center;\n  height: 100%;\n}\nsvg[data-v-4aa9889d] {\n  margin: 0 auto 20px;\n  color: var(--waiting-color);\n  height: 100px;\n  width: 100px;\n}\n.waiting-text[data-v-4aa9889d] {\n  color: var(--waiting-color);\n  font-size: 18px;\n  font-weight: 600;\n}\n", ""]);
 
 // exports
 
@@ -17929,7 +17929,7 @@ module.exports = g;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/micc83/Repositories/mailamie/assets/app.js */"./assets/app.js");
+module.exports = __webpack_require__(/*! /home/micc83/repositories/mailamie/assets/app.js */"./assets/app.js");
 
 
 /***/ })

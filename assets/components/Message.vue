@@ -25,34 +25,30 @@ export default {
 
 <style scoped>
 .message-created-at {
-  color: var(--muted-color);
+  color: var(--sidebar-muted-color);
   font-size: 0.8rem;
 }
 
 .message-subject {
   display: block;
-  color: var(--main-color);
+  color: var(--sidebar-title-color);
 }
 
 .message {
   cursor: pointer;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--sidebar-border-color);
   padding: 1rem;
 }
 
 .message:hover {
-  background: var(--background-color);
+  background: var(--sidebar-hover-color);
 }
 
 .active {
-  background: var(--ultralight-color) !important;
-}
-
-.active .message-subject {
-  color: var(--main-color);
+  background: var(--sidebar-active-color) !important;
 }
 
 .label {
-  color: var(--muted-color);
+  color: var(--sidebar-secondary-color);
 }
 </style>
