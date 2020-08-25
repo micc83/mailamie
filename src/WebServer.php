@@ -13,20 +13,18 @@ class WebServer
     private StreamSelectLoop $loop;
     private Emails\Store $messageStore;
     private string $host;
-    private string $version;
 
-    public function __construct(string $host, string $version, StreamSelectLoop $loop, Store $messageStore)
+    public function __construct(string $host, StreamSelectLoop $loop, Store $messageStore)
     {
         $this->loop = $loop;
         $this->messageStore = $messageStore;
         $this->host = $host;
-        $this->version = $version;
     }
 
     public function start(): void
     {
         $server = new Server($this->loop, function (ServerRequestInterface $request) {
-            return (new WebController($this->messageStore, $this->version))
+            return (new WebController($this->messageStore))
                 ->route($request);
         });
 

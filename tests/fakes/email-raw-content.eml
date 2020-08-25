@@ -1,0 +1,40 @@
+Date: Tue, 25 Aug 2020 14:04:04 +0000
+To: Joe User <joe@example.net>, ellen@example.com
+From: Mailer <from@example.com>
+Cc: cc@example.com
+Reply-To: Information <info@example.com>
+Subject: Here is the subject, welcome to New york!
+Message-ID: <hc7z4TqDK3PzPcl5KoyBOIi2xeUqhpGZsBe2Bdta6Cs@iMac-di-Alessandro.local>
+X-Mailer: PHPMailer 6.1.7 (https://github.com/PHPMailer/PHPMailer)
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="b1_hc7z4TqDK3PzPcl5KoyBOIi2xeUqhpGZsBe2Bdta6Cs"
+Content-Transfer-Encoding: 8bit
+
+This is a multi-part message in MIME format.
+
+--b1_hc7z4TqDK3PzPcl5KoyBOIi2xeUqhpGZsBe2Bdta6Cs
+Content-Type: multipart/alternative;
+ boundary="b2_hc7z4TqDK3PzPcl5KoyBOIi2xeUqhpGZsBe2Bdta6Cs"
+
+--b2_hc7z4TqDK3PzPcl5KoyBOIi2xeUqhpGZsBe2Bdta6Cs
+Content-Type: text/plain; charset=us-ascii
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+--b2_hc7z4TqDK3PzPcl5KoyBOIi2xeUqhpGZsBe2Bdta6Cs
+Content-Type: text/html; charset=us-ascii
+
+This is the HTML message body <b>in bold!</b>
+
+
+--b2_hc7z4TqDK3PzPcl5KoyBOIi2xeUqhpGZsBe2Bdta6Cs--
+
+--b1_hc7z4TqDK3PzPcl5KoyBOIi2xeUqhpGZsBe2Bdta6Cs
+Content-Type: text/plain; name=vouchers.txt
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=vouchers.txt
+
+TXkgZmlsZSBhdHRhY2htZW50Li4uLg==
+
+--b1_hc7z4TqDK3PzPcl5KoyBOIi2xeUqhpGZsBe2Bdta6Cs--

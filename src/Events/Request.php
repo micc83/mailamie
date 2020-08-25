@@ -2,7 +2,7 @@
 
 namespace Mailamie\Events;
 
-class Request
+class Request implements Event
 {
     public string $body;
 

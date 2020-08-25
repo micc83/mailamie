@@ -1,21 +1,24 @@
 <?php
 
-namespace Tests;
+namespace Tests\Unit;
 
 use Mailamie\Emails\Message;
 use Mailamie\Emails\Store;
 use Mailamie\WebSocketComponent;
 use PHPUnit\Framework\TestCase;
 use Ratchet\ConnectionInterface;
+use Tests\Traits\Messages;
 
 class WebSocketComponentTest extends TestCase
 {
+    use Messages;
+
     /** @test */
     public function a_websocket_message_is_sent_to_connect_clients_on_new_email()
     {
         $store = new Store();
         $websocket = new WebSocketComponent($store);
-        $message = new Message('','',[],[],'','','');
+        $message = $this->createMessage();
 
         $connection = $this->createMock(ConnectionInterface::class);
 

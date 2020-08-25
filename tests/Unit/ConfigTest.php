@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Unit;
 
 use Mailamie\Config;
 use PHPUnit\Framework\TestCase;

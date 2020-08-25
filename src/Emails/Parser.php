@@ -18,40 +18,15 @@ class Parser
         $message = ParseMessage::from($rawContent);
 
         $from = $message->getHeader('from')->getRawValue();
-
-        $recipients = array_map(function (AddressPart $addressPart) {
-            $name = $addressPart->getName();
-            $email = $addressPart->getValue();
-            if ($name) {
-                return "{$name} <{$email}>";
-            }
-            return $email;
-        }, $message->getHeader('to')->getAddresses());
-
-        $ccs = array_map(function (AddressPart $addressPart) {
-            $name = $addressPart->getName();
-            $email = $addressPart->getValue();
-            if ($name) {
-                return "{$name} <{$email}>";
-            }
-            return $email;
-        }, $message->getHeader('cc')->getAddresses());
-
+        $recipients = $this->joinNameAndEmail($message->getHeader('to')->getAddresses());
+        $ccs = $this->joinNameAndEmail($message->getHeader('cc')->getAddresses());
         $subject = $message->getHeaderValue('subject');
-
         $html = $message->getHtmlContent();
         $text = $message->getTextContent();
-
         $replyTo = $message->getHeader('reply-to')->getRawValue();
-
-        $attachments = [];
-        foreach ($message->getAllAttachmentParts() as $part) {
-            $attachments[] = new Attachment(
-                $part->getFilename(),
-                $part->getContent(),
-                $part->getContentType()
-            );
-        }
+        $attachments = $this->buildAttachmentFrom(
+            $message->getAllAttachmentParts()
+        );
 
         return new Message(
             $rawContent,
@@ -65,5 +40,34 @@ class Parser
             $allRecipients,
             $attachments
         );
+    }
+
+    /**
+     * @param MessagePart[] $attachments
+     * @return Attachment[]
+     */
+    private function buildAttachmentFrom(array $attachments): array
+    {
+        return array_map(function (MessagePart $part) {
+            return new Attachment(
+                $part->getFilename(),
+                $part->getContent(),
+                $part->getContentType()
+            );
+        }, $attachments);
+    }
+
+    /**
+     * @param AddressPart[] $addresses
+     * @return string[]
+     */
+    private function joinNameAndEmail(array $addresses): array
+    {
+        return array_map(function (AddressPart $addressPart) {
+            $name = $addressPart->getName();
+            $email = $addressPart->getValue();
+
+            return $name ? "{$name} <{$email}>" : $email;
+        }, $addresses);
     }
 }

@@ -9,6 +9,9 @@ class Config
     private array $params;
     private ?array $altParams;
 
+    const VERSION = "1.0.0";
+    const DATE_FORMAT = "Y-m-d H:i:s";
+
     public function __construct(array $params, array $altParams = null)
     {
         $this->params = $params;

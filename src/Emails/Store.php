@@ -4,6 +4,7 @@ namespace Mailamie\Emails;
 
 use Closure;
 use Exception;
+use Mailamie\Config;
 
 class Store
 {
@@ -19,7 +20,7 @@ class Store
 
     public function store(Message $message): void
     {
-        $this->messages[$message->id] = $message;
+        $this->messages[$message->getId()] = $message;
 
         foreach ($this->callbacks as $callback) {
             $callback($message);
@@ -42,11 +43,11 @@ class Store
     {
         return array_values(array_map(function (Message $message) {
             return [
-                'id'         => $message->id,
-                'from'       => $message->sender,
-                'recipients' => $message->recipients,
-                'subject'    => $message->subject,
-                'created_at' => $message->created_at->format('Y-m-d H:i:s')
+                'id'         => $message->getId(),
+                'from'       => $message->getSender(),
+                'recipients' => $message->getRecipients(),
+                'subject'    => $message->getSubject(),
+                'created_at' => $message->getCreatedAt()->format(Config::DATE_FORMAT)
             ];
         }, $this->sortedByDate()));
     }
@@ -59,7 +60,7 @@ class Store
         $messages = $this->messages;
 
         usort($messages, function (Message $a, Message $b) {
-            return $a->created_at->getTimestamp() < $b->created_at->getTimestamp() ? 1 : -1;
+            return $a->getCreatedAt()->getTimestamp() < $b->getCreatedAt()->getTimestamp() ? 1 : -1;
         });
 
         return $messages;

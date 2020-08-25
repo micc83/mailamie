@@ -13,16 +13,21 @@ class SmtpConnection
     private ConnectionInterface $connection;
     private EventDispatcherInterface $events;
     private string $messageBody = '';
+    private bool $collectingData = false;
 
     /** @var string[] */
     private array $recipients = [];
 
+    /**
+     * Response codes
+     */
     const READY = 220;
     const OK = 250;
     const CLOSING = 221;
     const START_MAIL_INPUT = 354;
 
     /**
+     * Response code descriptions
      * @var array<int,string>
      */
     private static array $statusDescriptions = [
@@ -35,14 +40,14 @@ class SmtpConnection
     public function __construct(
         ConnectionInterface $connection,
         EventDispatcherInterface $events
-    )
-    {
+    ) {
         $this->connection = $connection;
         $this->events = $events;
     }
 
     public function ready(): void
     {
+        $this->collectingData = false;
         $this->send(static::READY);
     }
 
@@ -50,22 +55,31 @@ class SmtpConnection
     {
         $this->events->dispatch(new Request($data));
 
-        if (preg_match("/^RCPT TO:<(.*)>/", $data, $matches)) {
+        if (preg_match("/^(EHLO|HELO|MAIL FROM:)/", $data)) {
+            $this->send(static::OK);
+        } elseif (preg_match("/^RCPT TO:<(.*)>/", $data, $matches)) {
             $this->addRecipient($matches[0]);
             $this->send(static::OK);
-        } elseif (preg_match("/^(EHLO|HELO|MAIL FROM:)/", $data)) {
-            $this->send(static::OK);
-        } elseif ($data === "DATA\r\n") {
-            $this->send(static::START_MAIL_INPUT);
         } elseif ($data === "QUIT\r\n") {
             $this->send(static::CLOSING);
-        } elseif (strpos($data, "\r\n.\r\n")) {
-            $this->addToMessageBody($data);
-            $this->send(static::OK);
-            $this->dispatchMessage();
-        } else {
-            $this->addToMessageBody($data);
+        } elseif ($data === "DATA\r\n") {
+            $this->collectingData = true;
+            $this->send(static::START_MAIL_INPUT);
+        } elseif ($this->collectingData) {
+            if ($this->endOfContentDetected($data)) {
+                $this->addToMessageBody($data);
+                $this->send(static::OK);
+                $this->dispatchMessage();
+                $this->collectingData = false;
+            } else {
+                $this->addToMessageBody($data);
+            }
         }
+    }
+
+    private function endOfContentDetected(string $data): bool
+    {
+        return (bool)preg_match("/\r\n\.\r\n$/", $data);
     }
 
     private function dispatchMessage(): void

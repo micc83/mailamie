@@ -12,10 +12,10 @@ class WebController
     private Store $store;
     private string $version;
 
-    public function __construct(Store $store, string $version)
+    public function __construct(Store $store)
     {
         $this->store = $store;
-        $this->version = $version;
+        $this->version = Config::VERSION;
     }
 
     public function route(ServerRequestInterface $request): Response
@@ -61,6 +61,7 @@ class WebController
             if (preg_match('/^\/api\/messages\/([^\/]*)$/i', $path, $matches)) {
                 $id = (string)$matches[1];
                 $message = $this->store->get($id);
+
                 return $this->json($message->toArray());
             }
 
@@ -69,10 +70,10 @@ class WebController
                 $attachmentId = (string)$matches[2];
                 $message = $this->store->get($messageId);
                 $attachment = $message->getAttachment($attachmentId);
+
                 return $this->download(
-                    $attachment->filename,
-                    $attachment->content,
-                    $attachment->type
+                    $attachment->getFilename(),
+                    $attachment->getContent()
                 );
             }
         } catch (Throwable $e) {
@@ -170,8 +171,8 @@ class WebController
         return new Response(
             200,
             [
-                'Content-Type'              => 'application/force-download',
-                'Content-Disposition'       => "attachment; filename=\"{$filename}\"",
+                'Content-Type'        => 'application/force-download',
+                'Content-Disposition' => "attachment; filename=\"{$filename}\"",
             ],
             $content
         );

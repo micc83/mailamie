@@ -1,6 +1,6 @@
 # ToDo
 - [ ] Write missing tests
-    - [ ] SmtpConnectionTest
+    - [x] SmtpConnectionTest
     - [ ] Email/MessageTest
     - [ ] Email/ParserTest
     - [ ] Email/StoreTest
@@ -11,12 +11,13 @@
 - [ ] Add coverage
 - [ ] Pass static analysis
 - [ ] Add bin for global install
-- [ ] Add license (custom MIT?)
+- [ ] Double check SmtpConnection DATA extrapolation
+- [ ] Verify other packages license
 - [ ] Fix issue with top right menu position on show more
 - [ ] Allow forwarding emails
-- [ ] Allow to get the version from CLI
-- [ ] Allow to get help from the CLI
-- [ ] Double check SmtpConnection DATA extrapolation
+- [x] Allow to get the version from CLI
+- [x] Allow to get help from the CLI
+- [x] Add license MIT
 - [x] Check different color scheme
 - [x] Fix issue with pre height + overflow: auto
 - [x] Check name is free

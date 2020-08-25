@@ -2,22 +2,31 @@
 
 namespace Mailamie\Emails;
 
-use DateTime;
+use DateTimeImmutable;
 use Exception;
+use Mailamie\Config;
 
+/**
+ * Class Message
+ * @package Mailamie\Emails
+ */
 class Message
 {
     private string $raw;
-    public string $id;
-    public string $sender;
-    public array $recipients;
-    public array $ccs;
-    public string $htmlBody;
-    public string $textBody;
-    public string $subject;
-    public DateTime $created_at;
+    private string $id;
+    private string $sender;
+    /** @var string[] */
+    private array $recipients;
+    /** @var string[] */
+    private array $ccs;
+    private string $htmlBody;
+    private string $textBody;
+    private string $subject;
+    private DateTimeImmutable $created_at;
     private string $replyTo;
+    /** @var string[] */
     private array $allRecipients;
+    /** @var Attachment[] */
     private array $attachments;
 
     public function __construct(
@@ -31,8 +40,7 @@ class Message
         string $replyTo,
         array $allRecipients,
         array $attachments
-    )
-    {
+    ) {
         $this->id = (string)uniqid();
         $this->raw = $raw;
         $this->sender = $sender;
@@ -41,7 +49,7 @@ class Message
         $this->htmlBody = $htmlBody;
         $this->textBody = $textBody;
         $this->subject = $subject;
-        $this->created_at = new DateTime();
+        $this->created_at = new DateTimeImmutable();
         $this->replyTo = $replyTo;
         $this->allRecipients = $allRecipients;
         $this->attachments = $attachments;
@@ -50,7 +58,7 @@ class Message
     public function getAttachment(string $id): Attachment
     {
         $attachments = array_values(array_filter($this->attachments, function (Attachment $attachment) use ($id) {
-            return $attachment->id === $id;
+            return $attachment->getId() === $id;
         }));
 
         if (!count($attachments)) {
@@ -65,10 +73,46 @@ class Message
         return mb_strimwidth(strip_tags($this->htmlBody) ?: $this->textBody, 0, 30);
     }
 
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getSender(): string
+    {
+        return $this->sender;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getRecipients(): array
+    {
+        return $this->recipients;
+    }
+
+    public function getSubject(): string
+    {
+        return $this->subject;
+    }
+
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * @return Attachment[]
+     */
+    public function getAttachments(): array
+    {
+        return $this->attachments;
+    }
+
     public function toTable()
     {
         $table = [
-            ['Date', $this->created_at->format('Y-m-d H:i:s')],
+            ['Date', $this->created_at->format(Config::DATE_FORMAT)],
             ['Subject', "<options=bold>{$this->subject}</>"],
             ['Excerpt', $this->getExcerpt()],
             ['To', implode("; ", $this->recipients)],
@@ -109,18 +153,18 @@ class Message
             'html'        => $this->htmlBody,
             'text'        => $this->textBody,
             'raw'         => $this->raw,
-            'attachments' => $this->getAttachments(),
-            'created_at'  => $this->created_at->format('Y-m-d H:i:s')
+            'attachments' => $this->attachmentsToArray(),
+            'created_at'  => $this->created_at->format(Config::DATE_FORMAT)
         ];
     }
 
-    private function getAttachments()
+    private function attachmentsToArray()
     {
         return array_map(function (Attachment $attachment) {
             return [
-                'id'   => $attachment->id,
-                'name' => $attachment->filename,
-                'url'  => "/api/messages/{$this->id}/attachments/{$attachment->id}"
+                'id'   => $attachment->getId(),
+                'name' => $attachment->getFilename(),
+                'url'  => "/api/messages/{$this->id}/attachments/{$attachment->getId()}"
             ];
         }, $this->attachments);
     }
@@ -128,7 +172,7 @@ class Message
     private function getAttachmentNames()
     {
         return array_map(function (Attachment $attachment) {
-            return $attachment->filename;
+            return $attachment->getFilename();
         }, $this->attachments);
     }
 

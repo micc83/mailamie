@@ -2,10 +2,10 @@
 
 namespace Mailamie\Events;
 
-class Message
+class Message implements Event
 {
     public string $body;
-    
+
     /**
      * @var string[] $recipients
      */

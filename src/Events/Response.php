@@ -2,7 +2,7 @@
 
 namespace Mailamie\Events;
 
-class Response
+class Response implements Event
 {
     public string $body;
     public string $code;

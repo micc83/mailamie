@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Integration;
 
 use Exception;
 use Mailamie\Config;
@@ -44,7 +44,7 @@ class IntegrationTest extends TestCase
 
         $this->loop->addTimer(2, function () {
             $this->process->terminate();
-            $message = 'Process should have terminated within 3 seconds.';
+            $message = 'Process should have terminated within 2 seconds.';
             throw new ExpectationFailedException($message);
         });
     }
@@ -207,5 +207,4 @@ class IntegrationTest extends TestCase
 
         return $mail->send();
     }
-
 }

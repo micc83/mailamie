@@ -27,6 +27,8 @@ class StartServer extends Command
     protected static $defaultName = 'mailamie';
     private Config $config;
 
+    const DATE_FORMAT = "";
+
     public function __construct(Config $config)
     {
         parent::__construct();
@@ -37,8 +39,8 @@ class StartServer extends Command
     {
         $this->setDescription('Mailamie is catch all SMTP server for testing.');
         $this->setHelp(
-            "You can define custom configuration from the file ~/.mailamie.config.php,\n".
-            "check the project readme file at https://github.com/micc83/mailamie\n".
+            "You can define custom configuration from the file ~/.mailamie.config.php,\n" .
+            "check the project readme file at https://github.com/micc83/mailamie\n" .
             "for all the available settings."
         );
         $this->addUsage('--host=127.0.0.1:25    Ex. SMTP Host definition');
@@ -75,7 +77,6 @@ class StartServer extends Command
 
         $webServer = new WebServer(
             $this->config->get('web.host'),
-            $this->config->get('version'),
             $loop,
             $messageStore
         );

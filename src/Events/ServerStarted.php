@@ -2,7 +2,7 @@
 
 namespace Mailamie\Events;
 
-class ServerStarted
+class ServerStarted implements Event
 {
     public string $host;
 

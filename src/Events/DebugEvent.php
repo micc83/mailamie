@@ -2,11 +2,11 @@
 
 namespace Mailamie\Events;
 
-class DebugEvent
+class DebugEvent implements Event
 {
-    public $param;
+    public string $param;
 
-    public function __construct($param)
+    public function __construct(string $param)
     {
         $this->param = $param;
     }
