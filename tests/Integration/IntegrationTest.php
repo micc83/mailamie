@@ -26,7 +26,7 @@ class IntegrationTest extends TestCase
     private ?int $expectedSteps;
     private int $step;
     private ?ExpectationFailedException $asyncException = null;
-    private WebSocket $websocket;
+    private ?WebSocket $websocket = null;
     private Config $config;
 
     protected function setUp(): void
