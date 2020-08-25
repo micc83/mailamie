@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\Unit\Emails;
 
@@ -12,7 +12,7 @@ class MessageTest extends TestCase
     use Messages;
 
     /** @test */
-    public function can_be_converted_to_array()
+    public function can_be_converted_to_array(): void
     {
         $message = $this->createMessage();
 
@@ -39,7 +39,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_be_converted_to_cli_table()
+    public function can_be_converted_to_cli_table(): void
     {
         $message = $this->createMessage();
 
@@ -57,7 +57,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function it_allows_to_retrieve_an_attachment_by_id()
+    public function it_allows_to_retrieve_an_attachment_by_id(): void
     {
         $message = $this->createMessage();
         $attachmentId = $message->getAttachments()[0]->getId();

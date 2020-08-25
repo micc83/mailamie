@@ -1,8 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
 return [
-    'version' => '1.0.0',
-
     'smtp' => [
         'host' => '127.0.0.1:8025',
     ],

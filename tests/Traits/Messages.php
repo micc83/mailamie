@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\Traits;
 
@@ -7,6 +7,10 @@ use Mailamie\Emails\Message;
 
 trait Messages
 {
+    /**
+     * @param array<string|array> $override
+     * @return Message
+     */
     private function createMessage(array $override = []): Message
     {
         $params = array_merge([

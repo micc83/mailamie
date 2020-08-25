@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\Unit;
 
@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class ConfigTest extends TestCase
 {
     /** @test */
-    public function it_allows_to_retrieve_a_value_with_dot_notation()
+    public function it_allows_to_retrieve_a_value_with_dot_notation(): void
     {
         $config = new Config(['level1' => ['level2' => 'value']]);
 
@@ -16,7 +16,7 @@ class ConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_allows_to_retrieve_a_value_from_default_or_alt_values()
+    public function it_allows_to_retrieve_a_value_from_default_or_alt_values(): void
     {
         $config = new Config([
             'a' => 'a_default_value',

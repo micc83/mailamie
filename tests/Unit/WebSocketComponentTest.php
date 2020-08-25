@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\Unit;
 
@@ -14,7 +14,7 @@ class WebSocketComponentTest extends TestCase
     use Messages;
 
     /** @test */
-    public function a_websocket_message_is_sent_to_connect_clients_on_new_email()
+    public function a_websocket_message_is_sent_to_connect_clients_on_new_email(): void
     {
         $store = new Store();
         $websocket = new WebSocketComponent($store);

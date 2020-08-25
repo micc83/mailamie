@@ -1,20 +1,20 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Mailamie;
 
 use Mailamie\Emails\Store;
 use Psr\Http\Message\ServerRequestInterface;
-use React\EventLoop\StreamSelectLoop;
+use React\EventLoop\LoopInterface;
 use React\Http\Server;
 use React\Socket\Server as SocketServer;
 
 class WebServer
 {
-    private StreamSelectLoop $loop;
+    private LoopInterface $loop;
     private Emails\Store $messageStore;
     private string $host;
 
-    public function __construct(string $host, StreamSelectLoop $loop, Store $messageStore)
+    public function __construct(string $host, LoopInterface $loop, Store $messageStore)
     {
         $this->loop = $loop;
         $this->messageStore = $messageStore;

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Mailamie;
 
@@ -6,12 +6,19 @@ use Exception;
 
 class Config
 {
+    /** @var array<string, string|array|null> */
     private array $params;
+    /** @var array<string, string|array|null>|null */
     private ?array $altParams;
 
     const VERSION = "1.0.0";
     const DATE_FORMAT = "Y-m-d H:i:s";
 
+    /**
+     * Config constructor.
+     * @param array<string|array|null> $params
+     * @param array<string|array|null>|null $altParams
+     */
     public function __construct(array $params, array $altParams = null)
     {
         $this->params = $params;
@@ -37,8 +44,8 @@ class Config
 
     /**
      * @param string $key
-     * @param array $data
-     * @return array|mixed|null
+     * @param array<string, string|array|null> $data
+     * @return array<string, string|array|null>|null
      * @throws Exception
      */
     private static function dotGet(string $key, array $data)

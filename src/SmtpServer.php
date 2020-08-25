@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Mailamie;
 
 use Mailamie\Events\DebugEvent;
 use Mailamie\Events\ServerStarted;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use React\EventLoop\StreamSelectLoop;
+use React\EventLoop\LoopInterface;
 use React\Socket\ConnectionInterface;
 use React\Socket\Server;
 
@@ -13,13 +13,9 @@ class SmtpServer
 {
     private string $host;
     private EventDispatcherInterface $events;
+    private LoopInterface $loop;
 
-    /**
-     * @var StreamSelectLoop
-     */
-    private StreamSelectLoop $loop;
-
-    public function __construct(string $host, StreamSelectLoop $loop, EventDispatcherInterface $events)
+    public function __construct(string $host, LoopInterface $loop, EventDispatcherInterface $events)
     {
         $this->host = $host;
         $this->events = $events;

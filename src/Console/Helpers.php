@@ -1,24 +1,22 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Mailamie\Console;
 
-use Exception;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\ConsoleSectionOutput;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Trait Helpers
  * @package Mailamie\Console
- * @mixin
  */
 trait Helpers
 {
-    protected ?OutputInterface $output;
+    protected ?ConsoleOutputInterface $output;
     protected ?InputInterface $input;
 
-    private function getOutput(): OutputInterface
+    private function getOutput(): ConsoleOutputInterface
     {
         return $this->output;
     }
@@ -45,7 +43,7 @@ trait Helpers
         $table->render();
     }
 
-    private function writeInfoBlockOn(ConsoleSectionOutput $section, string $title, string $subtitle)
+    private function writeInfoBlockOn(ConsoleSectionOutput $section, string $title, string $subtitle): void
     {
         $formatter = $this->getHelper('formatter');
         $message = [$title, $subtitle];

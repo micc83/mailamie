@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\Integration;
 
@@ -13,8 +13,10 @@ use React\ChildProcess\Process;
 use React\EventLoop\Factory;
 use React\EventLoop\LoopInterface;
 use React\Http\Browser;
+use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use RingCentral\Psr7\Response;
+
 use function Ratchet\Client\connect;
 use function React\Promise\all;
 
@@ -63,7 +65,7 @@ class IntegrationTest extends TestCase
     }
 
     /** @test */
-    public function should_start_and_listen_for_smtp_calls()
+    public function should_start_and_listen_for_smtp_calls(): void
     {
         $this->expectedSteps = 3;
 
@@ -100,7 +102,7 @@ class IntegrationTest extends TestCase
         $this->endLoop();
     }
 
-    private function endLoop()
+    private function endLoop(): void
     {
         $this->loop->run();
 
@@ -123,14 +125,17 @@ class IntegrationTest extends TestCase
         });
     }
 
-    private function connectToWebsocket(): PromiseInterface
+    private function connectToWebsocket(): ExtendedPromiseInterface
     {
-        return connect("ws://{$this->config->get('websocket.host')}", [], [], $this->loop)
+        /** @var ExtendedPromiseInterface $promise */
+        $promise = connect("ws://{$this->config->get('websocket.host')}", [], [], $this->loop)
             ->then(function (WebSocket $conn) {
                 $this->websocket = $conn;
             }, function (Exception $e) {
                 $this->storeAsyncException($e);
             });
+
+        return $promise;
     }
 
     private function assertServerStarting(string $chunk): void
@@ -153,7 +158,7 @@ class IntegrationTest extends TestCase
         $this->assertStringContainsString('Here is the subject, welcome to New york!', $chunk);
     }
 
-    private function assertWebBrowserWorking(): PromiseInterface
+    private function assertWebBrowserWorking(): ExtendedPromiseInterface
     {
         $client = new Browser($this->loop);
 
@@ -177,10 +182,13 @@ class IntegrationTest extends TestCase
                 $this->storeAsyncException($e);
             });
 
-        return all([$request1, $request2]);
+        /** @var ExtendedPromiseInterface $promise */
+        $promise = all([$request1, $request2]);
+
+        return $promise;
     }
 
-    private function storeAsyncException(Exception $e)
+    private function storeAsyncException(Exception $e): void
     {
         $this->asyncException = new ExpectationFailedException($e->getMessage(), null, $e);
     }

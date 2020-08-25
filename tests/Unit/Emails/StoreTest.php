@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\Unit\Emails;
 
@@ -13,7 +13,7 @@ class StoreTest extends TestCase
     use Messages;
 
     /** @test */
-    public function it_allows_to_store_and_search_messages()
+    public function it_allows_to_store_and_search_messages(): void
     {
         $message = $this->createMessage();
 
@@ -25,7 +25,7 @@ class StoreTest extends TestCase
     }
 
     /** @test */
-    public function it_allows_to_register_callbacks_for_new_messages()
+    public function it_allows_to_register_callbacks_for_new_messages(): void
     {
         $message = $this->createMessage();
 
@@ -41,7 +41,7 @@ class StoreTest extends TestCase
     }
 
     /** @test */
-    public function it_allows_to_retrieve_all_messages()
+    public function it_allows_to_retrieve_all_messages(): void
     {
         $message1 = $this->createMessage();
         $message2 = $this->createMessage();

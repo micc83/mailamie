@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Mailamie;
 
@@ -16,6 +16,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\ConsoleSectionOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -35,7 +36,7 @@ class StartServer extends Command
         $this->config = $config;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Mailamie is catch all SMTP server for testing.');
         $this->setHelp(
@@ -64,6 +65,10 @@ class StartServer extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if (!$output instanceof ConsoleOutputInterface) {
+            throw new Exception('Expected instance of ConsoleOutputInterface');
+        }
+
         $this->output = $output;
         $this->input = $input;
 
@@ -98,7 +103,7 @@ class StartServer extends Command
         return Command::SUCCESS;
     }
 
-    private function registerEventListenersOn(EventDispatcher $dispatcher, MessageStore $messageStore)
+    private function registerEventListenersOn(EventDispatcher $dispatcher, MessageStore $messageStore): void
     {
         $startingSection = $this->startingBanner();
 
@@ -141,8 +146,8 @@ class StartServer extends Command
 
     private function getHost(): string
     {
-        return (string)$this->getInput()->getOption('host')
-            ?: $this->config->get('smtp.host');
+        return (string)($this->getInput()->getOption('host')
+            ?: $this->config->get('smtp.host'));
     }
 
     private function startingBanner(): ConsoleSectionOutput

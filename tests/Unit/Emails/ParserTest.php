@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\Unit\Emails;
 
@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 class ParserTest extends TestCase
 {
     /** @test */
-    public function it_generated_a_message_instance_from_smtp_body_and_rcpts()
+    public function it_generated_a_message_instance_from_smtp_body_and_rcpts(): void
     {
         $parser = new Parser();
 

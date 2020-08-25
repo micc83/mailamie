@@ -1,9 +1,9 @@
 # ToDo
 - [ ] Write missing tests
     - [x] SmtpConnectionTest
-    - [ ] Email/MessageTest
-    - [ ] Email/ParserTest
-    - [ ] Email/StoreTest
+    - [x] Email/MessageTest
+    - [x] Email/ParserTest
+    - [x] Email/StoreTest
     - [ ] WebControllerTest
 - [ ] Load only needed React modules
 - [ ] Add github actions
@@ -11,10 +11,10 @@
 - [ ] Add coverage
 - [ ] Pass static analysis
 - [ ] Add bin for global install
-- [ ] Double check SmtpConnection DATA extrapolation
 - [ ] Verify other packages license
 - [ ] Fix issue with top right menu position on show more
 - [ ] Allow forwarding emails
+- [x] Double check SmtpConnection DATA extrapolation
 - [x] Allow to get the version from CLI
 - [x] Allow to get help from the CLI
 - [x] Add license MIT

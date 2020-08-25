@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Mailamie\Emails;
 
@@ -29,6 +29,19 @@ class Message
     /** @var Attachment[] */
     private array $attachments;
 
+    /**
+     * Message constructor.
+     * @param string $raw
+     * @param string $sender
+     * @param string[] $recipients
+     * @param string[] $ccs
+     * @param string $subject
+     * @param string $htmlBody
+     * @param string $textBody
+     * @param string $replyTo
+     * @param string[] $allRecipients
+     * @param Attachment[] $attachments
+     */
     public function __construct(
         string $raw,
         string $sender,
@@ -68,7 +81,7 @@ class Message
         return $attachments[0];
     }
 
-    public function getExcerpt()
+    public function getExcerpt(): string
     {
         return mb_strimwidth(strip_tags($this->htmlBody) ?: $this->textBody, 0, 30);
     }
@@ -109,7 +122,10 @@ class Message
         return $this->attachments;
     }
 
-    public function toTable()
+    /**
+     * @return array[]
+     */
+    public function toTable(): array
     {
         $table = [
             ['Date', $this->created_at->format(Config::DATE_FORMAT)],
@@ -140,6 +156,9 @@ class Message
         return $table;
     }
 
+    /**
+     * @return array<string|array>
+     */
     public function toArray(): array
     {
         return [
@@ -158,7 +177,10 @@ class Message
         ];
     }
 
-    private function attachmentsToArray()
+    /**
+     * @return array[]
+     */
+    private function attachmentsToArray(): array
     {
         return array_map(function (Attachment $attachment) {
             return [
@@ -169,7 +191,10 @@ class Message
         }, $this->attachments);
     }
 
-    private function getAttachmentNames()
+    /**
+     * @return string[]
+     */
+    private function getAttachmentNames(): array
     {
         return array_map(function (Attachment $attachment) {
             return $attachment->getFilename();
@@ -179,9 +204,9 @@ class Message
     /**
      * BCCs are recipients passed as RCPTs but not
      * in the body of the mail.
-     * @return array
+     * @return string[]
      */
-    private function getBccs()
+    private function getBccs(): array
     {
         return array_values(array_filter($this->allRecipients, function (string $recipient) {
             foreach (array_merge($this->recipients, $this->ccs) as $publicRecipient) {

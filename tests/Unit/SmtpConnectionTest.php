@@ -21,9 +21,10 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 class SmtpConnectionTest extends TestCase
 {
     /** @test */
-    public function on_ready_send_220_service_ready()
+    public function on_ready_send_220_service_ready(): void
     {
-        $smtp = new SmtpConnection(...[$connection, $dispatcher] = $this->createMocks());
+        [$connection, $dispatcher] = $this->createMocks();
+        $smtp = new SmtpConnection($connection, $dispatcher);
 
         $this->expectWrite($connection, 220);
 
@@ -36,9 +37,10 @@ class SmtpConnectionTest extends TestCase
     }
 
     /** @test */
-    public function it_allows_to_handle_EHLO_handshake()
+    public function it_allows_to_handle_EHLO_handshake(): void
     {
-        $smtp = new SmtpConnection(...[$connection, $dispatcher] = $this->createMocks());
+        [$connection, $dispatcher] = $this->createMocks();
+        $smtp = new SmtpConnection($connection, $dispatcher);
 
         $this->expectWrite($connection, 250);
         $this->expectDispatch(
@@ -51,9 +53,10 @@ class SmtpConnectionTest extends TestCase
     }
 
     /** @test */
-    public function it_allows_to_handle_RCPT_TO_commands()
+    public function it_allows_to_handle_RCPT_TO_commands(): void
     {
-        $smtp = new SmtpConnection(...[$connection, $dispatcher] = $this->createMocks());
+        [$connection, $dispatcher] = $this->createMocks();
+        $smtp = new SmtpConnection($connection, $dispatcher);
 
         $this->expectWrite($connection, 250);
         $this->expectDispatch(
@@ -66,9 +69,10 @@ class SmtpConnectionTest extends TestCase
     }
 
     /** @test */
-    public function it_allows_to_handle_DATA_commands()
+    public function it_allows_to_handle_DATA_commands(): void
     {
-        $smtp = new SmtpConnection(...[$connection, $dispatcher] = $this->createMocks());
+        [$connection, $dispatcher] = $this->createMocks();
+        $smtp = new SmtpConnection($connection, $dispatcher);
 
         $this->expectWrite($connection, 354);
         $this->expectDispatch(
@@ -81,9 +85,10 @@ class SmtpConnectionTest extends TestCase
     }
 
     /** @test */
-    public function it_allows_to_capture_a_new_message()
+    public function it_allows_to_capture_a_new_message(): void
     {
-        $smtp = new SmtpConnection(...[$connection, $dispatcher] = $this->createMocks());
+        [$connection, $dispatcher] = $this->createMocks();
+        $smtp = new SmtpConnection($connection, $dispatcher);
 
         $this->expectWrite($connection, 250, 354, 250);
         $this->expectDispatch(
@@ -105,9 +110,10 @@ class SmtpConnectionTest extends TestCase
     }
 
     /** @test */
-    public function it_allows_to_handle_QUIT_commands()
+    public function it_allows_to_handle_QUIT_commands(): void
     {
-        $smtp = new SmtpConnection(...[$connection, $dispatcher] = $this->createMocks());
+        [$connection, $dispatcher] = $this->createMocks();
+        $smtp = new SmtpConnection($connection, $dispatcher);
 
         $this->expectWrite($connection, 221);
         $this->expectDispatch(

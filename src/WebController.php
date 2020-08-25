@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Mailamie;
 
@@ -83,7 +83,7 @@ class WebController
         return $this->fileNotFoundError();
     }
 
-    private function handleStaticFile(string $path)
+    private function handleStaticFile(string $path): Response
     {
         return new Response(
             200,
@@ -95,7 +95,7 @@ class WebController
         );
     }
 
-    private function getMimeType($path): string
+    private function getMimeType(string $path): string
     {
         $mimeTypes = [
             'css' => 'text/css',
@@ -112,7 +112,7 @@ class WebController
         return mime_content_type($path);
     }
 
-    private function handlePhpFile(string $path)
+    private function handlePhpFile(string $path): Response
     {
         ob_start();
         require($path);
@@ -145,7 +145,7 @@ class WebController
     }
 
     /**
-     * @param array|object $data
+     * @param array<int|string,mixed>|object $data
      * @return Response
      */
     private function json($data): Response

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Mailamie\Emails;
 
@@ -66,7 +66,7 @@ class Store
         return $messages;
     }
 
-    public function onNewMessage(Closure $callback)
+    public function onNewMessage(Closure $callback): void
     {
         $this->callbacks[] = $callback;
     }

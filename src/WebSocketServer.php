@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Mailamie;
 
@@ -6,23 +6,23 @@ use Mailamie\Emails\Store;
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
-use React\EventLoop\StreamSelectLoop;
+use React\EventLoop\LoopInterface;
 use React\Socket\Server;
 
 class WebSocketServer
 {
-    private StreamSelectLoop $loop;
+    private LoopInterface $loop;
     private Store $store;
     private string $host;
 
-    public function __construct(string $host, StreamSelectLoop $loop, Store $store)
+    public function __construct(string $host, LoopInterface $loop, Store $store)
     {
         $this->loop = $loop;
         $this->store = $store;
         $this->host = $host;
     }
 
-    public function start()
+    public function start(): void
     {
         new IoServer(
             new HttpServer(
