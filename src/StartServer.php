@@ -24,7 +24,7 @@ class StartServer extends Command
 {
     use Helpers;
 
-    protected static $defaultName = 'start-server';
+    protected static $defaultName = 'mailamie';
     private Config $config;
 
     public function __construct(Config $config)
@@ -35,9 +35,21 @@ class StartServer extends Command
 
     protected function configure()
     {
+        $this->setDescription('Mailamie is catch all SMTP server for testing.');
+        $this->setHelp(
+            "You can define custom configuration from the file ~/.mailamie.config.php,\n".
+            "check the project readme file at https://github.com/micc83/mailamie\n".
+            "for all the available settings."
+        );
+        $this->addUsage('--host=127.0.0.1:25    Ex. SMTP Host definition');
         $this->setDefinition(
             new InputDefinition([
-                new InputOption('host', 'H', InputOption::VALUE_REQUIRED)
+                new InputOption(
+                    'host',
+                    'H',
+                    InputOption::VALUE_REQUIRED,
+                    'Set the host on which to listen for SMTP calls'
+                )
             ])
         );
     }

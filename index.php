@@ -7,11 +7,11 @@ use Mailamie\Config;
 use Mailamie\StartServer;
 use Symfony\Component\Console\Application;
 
-$application = new Application();
-
 $localConfig = @include getenv("HOME") . '/.mailamie.config.php';
 
 $config = new Config(require 'config.php', $localConfig ?: null);
+
+$application = new Application('mailamie', $config->get('version'));
 
 $command = new StartServer($config);
 

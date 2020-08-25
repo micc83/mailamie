@@ -11,10 +11,14 @@
 - [ ] Add coverage
 - [ ] Pass static analysis
 - [ ] Add bin for global install
-- [ ] Add license
+- [ ] Add license (custom MIT?)
+- [ ] Fix issue with top right menu position on show more
+- [ ] Allow forwarding emails
+- [ ] Allow to get the version from CLI
+- [ ] Allow to get help from the CLI
+- [ ] Double check SmtpConnection DATA extrapolation
 - [x] Check different color scheme
 - [x] Fix issue with pre height + overflow: auto
-- [ ] Fix issue with top right menu position on show more
 - [x] Check name is free
 - [x] Handle attachments
 - [x] Add missing data
