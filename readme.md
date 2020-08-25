@@ -6,7 +6,7 @@
 - [Why](#why)
 - [About](#how)
 - [Install](#install)
-- [Usage & Options](#usage-&-options)
+- [Usage](#usage)
 - [Settings](#settings)
 - [Testing](#testing)
 - [Changelog](changelog.md)
@@ -65,7 +65,7 @@ or, for better UX, in the browser:
 composer global require micc83/mailamie
 ```
 
-## Usage & options
+## Usage
 
 Run the following command to get help:
 
