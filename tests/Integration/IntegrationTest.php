@@ -14,7 +14,6 @@ use React\EventLoop\Factory;
 use React\EventLoop\LoopInterface;
 use React\Http\Browser;
 use React\Promise\ExtendedPromiseInterface;
-use React\Promise\PromiseInterface;
 use RingCentral\Psr7\Response;
 
 use function Ratchet\Client\connect;

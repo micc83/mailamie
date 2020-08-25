@@ -3,22 +3,47 @@
 
 ## Index
 
-- [About](#about)
+- [Why](#why)
+- [About](#how)
 - [Install](#install)
-- [Options](#options)
+- [Usage & Options](#usage-&-options)
 - [Settings](#settings)
-- [Testing](#options)
+- [Testing](#testing)
 - [Changelog](changelog.md)
 - [License](license.md)
 
-## About
+## Why
 
-**Mailamie** is a pretty simple Catch All SMTP Server for testing completely written in PHP and based on the great work
-made by the folks at [ReactPhp](https://reactphp.org/).
+Sometime in the past I just needed a simple tool to verify that some legacy project, without tests in place or with some 
+very complex environment sent the right emails to the right people. Surely there're many valid tools out there for the 
+job but as it's not something happening every day it's pretty cumbersome having to install these tools.
+
+**Mailamie** is a side project I've put up in my summer vacations for playing with async PHP, using it is just simple 
+as setting a few parameters on my project:
+```dotenv
+# Ex. Laravel .env file
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=8025
+MAIL_ENCRYPTION=null
+```
+and running it on my shell with the command:
+```shell script
+$ mailamie
+```
+
+## How
+
+**Mailamie** is a pretty simple Catch All SMTP Server for local testing completely written in PHP and based on the great 
+work made by the folks at [ReactPhp](https://reactphp.org/). 
 
 It's in no way a replacement for more complete tools such as [Mailhog](https://github.com/mailhog/MailHog) as it doesn't 
 actually check SMTP implementantion details, instead it only cares about getting emails headers and body for high level
 delivery testing.
+
+**DO NOT USE IN PRODUCTION**. Mailamie starts three different servers (SMTP on port 8025, HTTP on port 8080, WebSocket 
+on port 1338). No steps have been taken to secure any of the three. Also, external access to those ports should be 
+blocked.
 
 **Mailamie** can be used directly from the CLI:
 
@@ -40,7 +65,7 @@ or, for better UX, in the browser:
 composer global require micc83/mailamie
 ```
 
-## Options
+## Usage & options
 
 Run the following command to get help:
 
@@ -48,7 +73,7 @@ Run the following command to get help:
 mailamie --help
 ```
 
-The outout will be:
+The output will be:
 
 ```shell script
 Description:
@@ -78,16 +103,14 @@ Help:
 You can define default settings in `~/.mailamie.config.php`, in order to do so run:
 
 ```shell script
-touch ~/.mailamie.config.php  && vim ~/.mailamie.config.php
+$ touch ~/.mailamie.config.php && vim ~/.mailamie.config.php
 ```
 
 This files returns a PHP array with the following available settings. 
 
 ```php
 <?php
-/**
- * Mailamie settings.
- */
+
 return [
     'smtp' => [
         'host' => '127.0.0.1:8025',
@@ -108,5 +131,5 @@ You'd better define only the needed one, in case something should change after u
 ## Testing
 Run phpunit with coverage
 ```shell script
-phpdbg -qrr ./vendor/bin/phpunit --coverage-text
+$ phpdbg -qrr ./vendor/bin/phpunit --coverage-text
 ```
