@@ -11,7 +11,7 @@ $localConfig = @include getenv("HOME") . '/.mailamie.config.php';
 
 $config = new Config(require 'config.php', $localConfig ?: null);
 
-$application = new Application('mailamie', $config->get('version'));
+$application = new Application('mailamie', Config::VERSION);
 
 $command = new StartServer($config);
 
