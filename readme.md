@@ -1,6 +1,8 @@
 # Mailamie
 **Catch All SMTP Server for testing**
 
+Small change...
+
 ## Index
 
 - [Why](#why)
