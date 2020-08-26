@@ -64,8 +64,8 @@
   },
   "scripts": {
     "cghooks": "vendor/bin/cghooks",
-    "post-install-cmd": "cghooks add --ignore-lock",
-    "post-update-cmd": "cghooks update"
+    "post-install-cmd": "@cghooks add --ignore-lock",
+    "post-update-cmd": "@cghooks update"
   },
   "config": {
     "preferred-install": "dist",
