@@ -1,6 +1,10 @@
 # Mailamie
 **Catch All SMTP Server for testing**
 
+![Tests](https://github.com/micc83/mailamie/workflows/Tests/badge.svg?branch=main) 
+![PHP CS Fixer](https://github.com/micc83/mailamie/workflows/PHP%20CS%20Fixer/badge.svg?branch=main)
+![PHPStan](https://github.com/micc83/mailamie/workflows/PHPStan/badge.svg?branch=main)
+
 ## Index
 
 - [Why](#why)
