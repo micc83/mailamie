@@ -1,17 +1,43 @@
 {
   "name": "micc83/mailamie",
-  "description": "Test SMTP mail server",
+  "description": "Catch All SMTP Server for testing",
+  "keywords": [
+    "smtp",
+    "mailamie",
+    "php"
+  ],
   "type": "project",
+  "homepage": "https://github.com/micc83/mailamie",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alessandro Benoit",
+      "email": "micc83@gmail.com",
+      "homepage": "https://github.com/micc83",
+      "role": "Developer"
+    }
+  ],
   "require": {
     "php": "^7.4",
     "ext-fileinfo": "*",
-    "ext-mbstring": "*",
     "ext-json": "*",
+    "ext-mbstring": "*",
+    "brainmaestro/composer-git-hooks": "^2.8",
+    "cboden/ratchet": "^0.4.3",
     "react/react": "^1.1",
-    "zbateson/mail-mime-parser": "^1.2",
     "symfony/console": "^5.1",
     "symfony/event-dispatcher": "^5.1",
-    "cboden/ratchet": "^0.4.3"
+    "zbateson/mail-mime-parser": "^1.2"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^0.12.38",
+    "squizlabs/php_codesniffer": "*",
+    "friendsofphp/php-cs-fixer": "^2.16",
+    "phpunit/phpunit": "^9",
+    "phpmailer/phpmailer": "^6.1",
+    "react/http": "^1.0",
+    "ratchet/pawl": "^0.3.5",
+    "react/child-process": "^0.6.1"
   },
   "autoload-dev": {
     "psr-4": {
@@ -23,21 +49,27 @@
       "Mailamie\\": "src/"
     }
   },
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Alessandro Benoit",
-      "email": "micc83@gmail.com"
+  "extra": {
+    "hooks": {
+      "pre-commit": [
+        "echo Committing as $(git config user.name)",
+        "./vendor/bin/php-cs-fixer fix"
+      ],
+      "pre-push": [
+        "./vendor/bin/php-cs-fixer fix --dry-run",
+        "./vendor/bin/phpstan analyze",
+        "./vendor/bin/phpunit --stop-on-failure --stop-on-error"
+      ]
     }
-  ],
-  "require-dev": {
-    "phpstan/phpstan": "^0.12.38",
-    "squizlabs/php_codesniffer": "*",
-    "friendsofphp/php-cs-fixer": "^2.16",
-    "phpunit/phpunit": "^9",
-    "phpmailer/phpmailer": "^6.1",
-    "react/http": "^1.0",
-    "ratchet/pawl": "^0.3.5",
-    "react/child-process": "^0.6.1"
+  },
+  "scripts": {
+    "cghooks": "vendor/bin/cghooks",
+    "post-install-cmd": "cghooks add --ignore-lock",
+    "post-update-cmd": "cghooks update"
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
   }
 }

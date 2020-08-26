@@ -6,14 +6,14 @@
     - [x] Email/StoreTest
     - [ ] WebControllerTest
 - [ ] Load only needed React modules
-- [ ] Add github actions
-- [ ] Add git hooks
-- [ ] Add coverage
-- [ ] Pass static analysis
 - [ ] Add bin for global install
 - [ ] Verify other packages license
 - [ ] Fix issue with top right menu position on show more
 - [ ] Allow forwarding emails
+- [x] Add git hooks
+- [x] Add github actions
+- [x] Add coverage
+- [x] Pass static analysis
 - [x] Double check SmtpConnection DATA extrapolation
 - [x] Allow to get the version from CLI
 - [x] Allow to get help from the CLI

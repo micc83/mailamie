@@ -12,7 +12,6 @@
 - [Install](#install)
 - [Usage](#usage)
 - [Settings](#settings)
-- [Testing](#testing)
 - [Changelog](changelog.md)
 - [License](license.md)
 
@@ -131,9 +130,3 @@ return [
 ```
 
 You'd better define only the needed one, in case something should change after upgrades.
-
-## Testing
-Run phpunit with coverage
-```shell script
-$ phpdbg -qrr ./vendor/bin/phpunit --coverage-text
-```
