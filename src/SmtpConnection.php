@@ -105,6 +105,6 @@ class SmtpConnection
             new Response($statusCode, static::$statusDescriptions[$statusCode], $comment)
         );
         $response = implode(" ", array_filter([$statusCode, $comment]));
-        $this->connection->write("{$response}\r\n");
+        $this->connection->write("{$response} \r\n");
     }
 }

@@ -156,7 +156,7 @@ class SmtpConnectionTest extends TestCase
             ->expects(self::exactly(count($codes)))
             ->method('write')
             ->withConsecutive(... array_map(function ($code) {
-                return ["{$code}\r\n"];
+                return ["{$code} \r\n"];
             }, $codes));
     }
 }
