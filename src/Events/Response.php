@@ -6,10 +6,12 @@ class Response implements Event
 {
     public string $body;
     public string $code;
+    private ?string $comment;
 
-    public function __construct(int $code, string $body, string $comment = '')
+    public function __construct(int $code, string $body, string $comment = null)
     {
-        $this->code = "{$code} {$comment}";
+        $this->code = (string)$code;
         $this->body = $body;
+        $this->comment = $comment;
     }
 }

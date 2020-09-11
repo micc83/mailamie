@@ -127,7 +127,7 @@ class IntegrationTest extends TestCase
     private function connectToWebsocket(): ExtendedPromiseInterface
     {
         /** @var ExtendedPromiseInterface $promise */
-        $promise = connect("ws://{$this->config->get('websocket.host')}", [], [], $this->loop)
+        $promise = connect("ws://{$this->config->get('websocket.host')}:{$this->config->get('websocket.port')}", [], [], $this->loop)
             ->then(function (WebSocket $conn) {
                 $this->websocket = $conn;
             }, function (Exception $e) {
@@ -145,8 +145,8 @@ class IntegrationTest extends TestCase
     private function assertServerUpAndRunning(string $chunk): void
     {
         $this->assertStringContainsString('SERVER UP AND RUNNING', $chunk);
-        $this->assertStringContainsString("SMTP listening on tcp://{$this->config->get('smtp.host')}", $chunk);
-        $this->assertStringContainsString("Web interface at http://{$this->config->get('web.host')}", $chunk);
+        $this->assertStringContainsString("SMTP listening on tcp://{$this->config->get('smtp.host')}:{$this->config->get('smtp.port')}", $chunk);
+        $this->assertStringContainsString("Web interface at http://{$this->config->get('http.host')}:{$this->config->get('http.port')}", $chunk);
     }
 
     private function assertMessageReceived(string $chunk): void
@@ -163,7 +163,7 @@ class IntegrationTest extends TestCase
 
         $request1 = $client
             ->withTimeout(1)
-            ->get("http://{$this->config->get('web.host')}/api/messages")
+            ->get("http://{$this->config->get('http.host')}:{$this->config->get('http.port')}/api/messages")
             ->then(function (Response $response) {
                 $content = $response->getBody()->getContents();
                 $this->assertStringContainsString('"from":"Mailer <from@example.com>"', $content);
@@ -173,7 +173,7 @@ class IntegrationTest extends TestCase
 
         $request2 = $client
             ->withTimeout(1)
-            ->get("http://{$this->config->get('web.host')}")
+            ->get("http://{$this->config->get('http.host')}:{$this->config->get('http.port')}")
             ->then(function (Response $response) {
                 $content = $response->getBody()->getContents();
                 $this->assertStringContainsString('<div id="app">', $content);
@@ -198,7 +198,8 @@ class IntegrationTest extends TestCase
 
         $mail->isSMTP();
 
-        [$mail->Host, $mail->Port] = explode(':', $this->config->get('smtp.host'));
+        $mail->Host = $this->config->get('smtp.host');
+        $mail->Port = $this->config->get('smtp.port');
         $mail->Timeout = 1;
 
         $mail->setFrom('from@example.com', 'Mailer');

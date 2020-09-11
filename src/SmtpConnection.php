@@ -99,11 +99,12 @@ class SmtpConnection
         $this->messageBody .= $content;
     }
 
-    private function send(int $statusCode, string $comment = ''): void
+    private function send(int $statusCode, string $comment = null): void
     {
         $this->events->dispatch(
-            new Response($statusCode, static::$statusDescriptions[$statusCode])
+            new Response($statusCode, static::$statusDescriptions[$statusCode], $comment)
         );
-        $this->connection->write("{$statusCode} {$comment}\r\n");
+        $response = implode(" ", array_filter([$statusCode, $comment]));
+        $this->connection->write("{$response}\r\n");
     }
 }

@@ -26,11 +26,11 @@ class SmtpConnectionTest extends TestCase
         [$connection, $dispatcher] = $this->createMocks();
         $smtp = new SmtpConnection($connection, $dispatcher);
 
-        $this->expectWrite($connection, 220);
+        $this->expectWrite($connection, "220 mailamie");
 
         $this->expectDispatch(
             $dispatcher,
-            new Response(220, "Service ready")
+            new Response(220, "Service ready", "mailamie")
         );
 
         $smtp->ready();
@@ -146,12 +146,16 @@ class SmtpConnectionTest extends TestCase
             }, $responses));
     }
 
-    private function expectWrite(MockObject $connection, int ...$codes): void
+    /**
+     * @param MockObject $connection
+     * @param int|string ...$codes
+     */
+    private function expectWrite(MockObject $connection, ...$codes): void
     {
         $connection
             ->expects(self::exactly(count($codes)))
             ->method('write')
-            ->withConsecutive(... array_map(function (int $code) {
+            ->withConsecutive(... array_map(function ($code) {
                 return ["{$code}\r\n"];
             }, $codes));
     }
