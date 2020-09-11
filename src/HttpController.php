@@ -7,15 +7,17 @@ use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Message\Response;
 use Throwable;
 
-class WebController
+class HttpController
 {
     private Store $store;
     private string $version;
+    private string $websocketHost;
 
-    public function __construct(Store $store)
+    public function __construct(Store $store, string $websocketHost)
     {
         $this->store = $store;
         $this->version = Config::VERSION;
+        $this->websocketHost = $websocketHost;
     }
 
     public function route(ServerRequestInterface $request): Response

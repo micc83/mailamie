@@ -23,7 +23,7 @@ class Message
     private string $textBody;
     private string $subject;
     private DateTimeImmutable $created_at;
-    private string $replyTo;
+    private ?string $replyTo;
     /** @var string[] */
     private array $allRecipients;
     /** @var Attachment[] */
@@ -38,7 +38,7 @@ class Message
      * @param string $subject
      * @param string $htmlBody
      * @param string $textBody
-     * @param string $replyTo
+     * @param string|null $replyTo
      * @param string[] $allRecipients
      * @param Attachment[] $attachments
      */
@@ -50,7 +50,7 @@ class Message
         string $subject,
         string $htmlBody,
         string $textBody,
-        string $replyTo,
+        ?string $replyTo,
         array $allRecipients,
         array $attachments
     ) {

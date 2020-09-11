@@ -2764,6 +2764,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     Viewer: _Viewer__WEBPACK_IMPORTED_MODULE_5__["default"],
     Waiter: _Waiter__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
+  props: ['websocket'],
   created: function created() {
     var _this = this;
 
@@ -2772,7 +2773,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              new WebSocket("ws://localhost:1338").onmessage = function (event) {
+              new WebSocket("ws://".concat(_this.websocket)).onmessage = function (event) {
                 var message = JSON.parse(event.data);
 
                 _this.messages.unshift(message);
@@ -3092,7 +3093,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.app {\n  display: flex;\n}\n.sidebar {\n  max-width: 350px;\n  color: var(--sidebar-text-color);\n  background-color: var(--sidebar-background-color);\n  border-right: 1px solid var(--sidebar-border-color);\n  overflow: auto;\n}\n.viewer-container, .sidebar {\n  height: 100vh !important;\n}\n.viewer-container {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n  align-content: stretch;\n  overflow:hidden;\n}\n.navbar {\n  padding-right: .5rem;\n  padding-left: .5rem;\n  justify-content: space-between;\n  display: flex;\n  background-color: var(--header-background-color);\n  flex-wrap: nowrap;\n  color: var(--header-text-color);\n}\n", ""]);
+exports.push([module.i, "\n.app {\n  display: flex;\n}\n.sidebar {\n  width: 100%;\n  max-width: 350px;\n  color: var(--sidebar-text-color);\n  background-color: var(--sidebar-background-color);\n  border-right: 1px solid var(--sidebar-border-color);\n  overflow: auto;\n}\n.viewer-container, .sidebar {\n  height: 100vh !important;\n}\n.viewer-container {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n  align-content: stretch;\n  overflow:hidden;\n}\n.navbar {\n  padding-right: .5rem;\n  padding-left: .5rem;\n  justify-content: space-between;\n  display: flex;\n  background-color: var(--header-background-color);\n  flex-wrap: nowrap;\n  color: var(--header-text-color);\n}\n", ""]);
 
 // exports
 

@@ -18,12 +18,15 @@ class Parser
         $message = ParseMessage::from($rawContent);
 
         $from = $message->getHeader('from')->getRawValue();
-        $recipients = $this->joinNameAndEmail($message->getHeader('to')->getAddresses());
-        $ccs = $this->joinNameAndEmail($message->getHeader('cc')->getAddresses());
+        $toHeader = $message->getHeader('to');
+        $recipients = $this->joinNameAndEmail($toHeader ? $toHeader->getAddresses() : []);
+        $ccHeader = $message->getHeader('cc');
+        $ccs = $this->joinNameAndEmail($ccHeader ? $ccHeader->getAddresses() : []);
         $subject = $message->getHeaderValue('subject');
         $html = $message->getHtmlContent();
         $text = $message->getTextContent();
-        $replyTo = $message->getHeader('reply-to')->getRawValue();
+        $replyToHeader = $message->getHeader('reply-to');
+        $replyTo = $replyToHeader ? $replyToHeader->getRawValue() : null;
         $attachments = $this->buildAttachmentFrom(
             $message->getAllAttachmentParts()
         );

@@ -8,25 +8,30 @@ use React\EventLoop\LoopInterface;
 use React\Http\Server;
 use React\Socket\Server as SocketServer;
 
-class WebServer
+class HttpServer
 {
     private LoopInterface $loop;
     private Emails\Store $messageStore;
     private string $host;
+    private string $websocketHost;
 
-    public function __construct(string $host, LoopInterface $loop, Store $messageStore)
+    public function __construct(string $host, string $websocketHost, LoopInterface $loop, Store $messageStore)
     {
         $this->loop = $loop;
         $this->messageStore = $messageStore;
         $this->host = $host;
+        $this->websocketHost = $websocketHost;
     }
 
     public function start(): void
     {
-        $server = new Server($this->loop, function (ServerRequestInterface $request) {
-            return (new WebController($this->messageStore))
-                ->route($request);
-        });
+        $server = new Server(
+            $this->loop,
+            fn (ServerRequestInterface $request) => (
+                new HttpController($this->messageStore, $this->websocketHost)
+            )
+            ->route($request)
+        );
 
         $socket = new SocketServer($this->host, $this->loop);
         $server->listen($socket);

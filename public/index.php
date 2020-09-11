@@ -12,7 +12,7 @@
 <body>
 
 <div id="app">
-    <app></app>
+    <app websocket="<?= $this->websocketHost ?>"></app>
 </div>
 
 <script src="app.js?v=<?= $this->version ?>"></script>

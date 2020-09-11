@@ -44,14 +44,20 @@ class StartServer extends Command
             "check the project readme file at https://github.com/micc83/mailamie\n" .
             "for all the available settings."
         );
-        $this->addUsage('--host=127.0.0.1:25    Ex. SMTP Host definition');
+        $this->addUsage('--host=127.0.0.1 --port=25    Ex. SMTP Host definition');
         $this->setDefinition(
             new InputDefinition([
                 new InputOption(
                     'host',
                     'H',
                     InputOption::VALUE_REQUIRED,
-                    'Set the host on which to listen for SMTP calls'
+                    'Set the host on which to listen for calls'
+                ),
+                new InputOption(
+                    'port',
+                    'p',
+                    InputOption::VALUE_REQUIRED,
+                    'Set the port on which to listen for SMTP calls'
                 )
             ])
         );
@@ -76,18 +82,19 @@ class StartServer extends Command
 
         $loop = Factory::create();
 
-        $smtpServer = new SmtpServer($this->getHost(), $loop, $dispatcher);
+        $smtpServer = new SmtpServer($this->getSmtpHost(), $loop, $dispatcher);
 
         $messageStore = new MessageStore();
 
-        $webServer = new WebServer(
-            $this->config->get('web.host'),
+        $webServer = new HttpServer(
+            $this->getHttpHost(),
+            $this->getWebsocketHost(),
             $loop,
             $messageStore
         );
 
         $websocketServer = new WebSocketServer(
-            $this->config->get('websocket.host'),
+            $this->getWebsocketHost(),
             $loop,
             $messageStore
         );
@@ -111,7 +118,7 @@ class StartServer extends Command
             $this->writeInfoBlockOn(
                 $startingSection,
                 '✓ SERVER UP AND RUNNING',
-                "SMTP listening on {$event->host}\n  Web interface at http://{$this->config->get('web.host')}"
+                "SMTP listening on {$event->host}\n  Web interface at http://{$this->getHttpHost()}"
             );
         });
 
@@ -144,10 +151,28 @@ class StartServer extends Command
         $this->writeTable($email->toTable());
     }
 
-    private function getHost(): string
+    private function getSmtpHost(): string
     {
-        return (string)($this->getInput()->getOption('host')
-            ?: $this->config->get('smtp.host'));
+        $host = $this->getInput()->getOption('host') ?:$this->config->get('smtp.host');
+        $port = $this->getInput()->getOption('port') ?:$this->config->get('smtp.port');
+
+        return "{$host}:{$port}";
+    }
+
+    private function getHttpHost(): string
+    {
+        $host = $this->getInput()->getOption('host') ?:$this->config->get('http.host');
+        $port = $this->config->get('http.port');
+
+        return "{$host}:{$port}";
+    }
+
+    private function getWebsocketHost(): string
+    {
+        $host = $this->getInput()->getOption('host') ?:$this->config->get('websocket.host');
+        $port = $this->config->get('websocket.port');
+
+        return "{$host}:{$port}";
     }
 
     private function startingBanner(): ConsoleSectionOutput

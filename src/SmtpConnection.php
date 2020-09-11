@@ -48,7 +48,7 @@ class SmtpConnection
     public function ready(): void
     {
         $this->collectingData = false;
-        $this->send(static::READY);
+        $this->send(static::READY, 'mailamie');
     }
 
     public function handle(string $data): void
@@ -99,11 +99,11 @@ class SmtpConnection
         $this->messageBody .= $content;
     }
 
-    private function send(int $statusCode): void
+    private function send(int $statusCode, string $comment = ''): void
     {
         $this->events->dispatch(
             new Response($statusCode, static::$statusDescriptions[$statusCode])
         );
-        $this->connection->write("{$statusCode}\r\n");
+        $this->connection->write("{$statusCode} {$comment}\r\n");
     }
 }

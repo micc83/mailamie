@@ -26,19 +26,12 @@
     --viewer-background-color: aliceblue;
     --viewer-text-color: #212529;
 
+    /** Extra */
     --waiting-color: #b7caec;
 
-
-    --ultralight-color: aliceblue;
-    --main-color: #4b7ed6;
-    --border-color: #dee2e6;
-    --background-color: #f8f9fa;
-    --muted-color: #6c757d;
-    --white: #ffffff;
-    --black: #000000;
-
-    --bs-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    --bs-font-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    /** Fonts */
+    --font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    --font-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
 }
 
 html, body {
@@ -49,7 +42,7 @@ html, body {
 
 body {
     margin: 0;
-    font-family: var(--bs-font-sans-serif);
+    font-family: var(--font-sans-serif);
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -58,7 +51,7 @@ body {
 }
 
 pre {
-    font-family: var(--bs-font-monospace);
+    font-family: var(--font-monospace);
 }
 
 svg {

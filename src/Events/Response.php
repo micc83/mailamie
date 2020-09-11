@@ -7,9 +7,9 @@ class Response implements Event
     public string $body;
     public string $code;
 
-    public function __construct(int $code, string $body)
+    public function __construct(int $code, string $body, string $comment = '')
     {
-        $this->code = (string) $code;
+        $this->code = "{$code} {$comment}";
         $this->body = $body;
     }
 }

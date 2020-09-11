@@ -47,8 +47,9 @@ export default {
     Viewer,
     Waiter
   },
+  props: ['websocket'],
   async created() {
-    new WebSocket("ws://localhost:1338").onmessage = event => {
+    new WebSocket(`ws://${this.websocket}`).onmessage = event => {
       let message = JSON.parse(event.data);
       this.messages.unshift(message)
       if (!this.message) {
@@ -88,6 +89,7 @@ export default {
 }
 
 .sidebar {
+  width: 100%;
   max-width: 350px;
   color: var(--sidebar-text-color);
   background-color: var(--sidebar-background-color);
