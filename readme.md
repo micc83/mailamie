@@ -26,7 +26,7 @@ as setting a few parameters on your project:
 ```dotenv
 # Ex. Laravel .env file
 MAIL_MAILER=smtp
-MAIL_HOST=smtp.mailtrap.io
+MAIL_HOST=127.0.0.1
 MAIL_PORT=8025
 MAIL_ENCRYPTION=null
 ```
