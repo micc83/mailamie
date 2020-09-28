@@ -6,7 +6,7 @@
     "mailamie",
     "php"
   ],
-  "type": "project",
+  "type": "library",
   "homepage": "https://github.com/micc83/mailamie",
   "license": "MIT",
   "authors": [
@@ -22,7 +22,6 @@
     "ext-fileinfo": "*",
     "ext-json": "*",
     "ext-mbstring": "*",
-    "brainmaestro/composer-git-hooks": "^2.8",
     "cboden/ratchet": "^0.4.3",
     "react/react": "^1.1",
     "symfony/console": "^5.1",
@@ -30,6 +29,7 @@
     "zbateson/mail-mime-parser": "^1.2"
   },
   "require-dev": {
+    "brainmaestro/composer-git-hooks": "^2.8",
     "phpstan/phpstan": "^0.12.38",
     "friendsofphp/php-cs-fixer": "^2.16",
     "phpunit/phpunit": "^9",
