@@ -148,7 +148,7 @@ class StartServer extends Command
             'green'
         );
 
-        $this->writeTable($email->toTable());
+        $this->writeContentTable($email->toTable());
     }
 
     private function getSmtpHost(): string

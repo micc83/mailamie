@@ -35,12 +35,13 @@ trait Helpers
      * @param array[] $rows
      * @return void
      */
-    private function writeTable(array $rows): void
+    private function writeContentTable(array $rows): void
     {
-        $table = new Table($this->getOutput());
-        $table->setRows($rows);
-        $table->setColumnMaxWidth(1, 60);
-        $table->render();
+        $this->getOutput()->writeln("--------------------------------------------");
+        foreach ($rows as $row) {
+            $this->writeFormatted('CONTENT', "<options=bold>$row[0]:</> $row[1]", "yellow");
+        }
+        $this->getOutput()->writeln("--------------------------------------------");
     }
 
     private function writeInfoBlockOn(ConsoleSectionOutput $section, string $title, string $subtitle): void
@@ -61,8 +62,10 @@ trait Helpers
         $output = $this->getOutput();
 
         if (!$output->isDebug()) {
-            $content = mb_strimwidth($content, 0, 80, '...');
+            $content = mb_strimwidth($content, 0, 120, '...');
         }
+
+        $content = $this->removeBreakingSpaces($content);
 
         $formattedLine = $this
             ->getHelper('formatter')
@@ -73,5 +76,14 @@ trait Helpers
             );
 
         $output->writeln($formattedLine);
+    }
+
+    private function removeBreakingSpaces(string $content): string
+    {
+        return preg_replace(
+            '/\s+/',
+            ' ',
+            preg_replace("/\s|\n/m", ' ', $content)
+        );
     }
 }

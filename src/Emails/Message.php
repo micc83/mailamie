@@ -81,11 +81,6 @@ class Message
         return $attachments[0];
     }
 
-    public function getExcerpt(): string
-    {
-        return mb_strimwidth(strip_tags($this->htmlBody) ?: $this->textBody, 0, 30);
-    }
-
     public function getId(): string
     {
         return $this->id;
@@ -130,7 +125,7 @@ class Message
         $table = [
             ['Date', $this->created_at->format(Config::DATE_FORMAT)],
             ['Subject', "<options=bold>{$this->subject}</>"],
-            ['Excerpt', $this->getExcerpt()],
+            ['Excerpt', mb_strimwidth($this->textBody ?: strip_tags($this->htmlBody), 0, 200)],
             ['To', implode("; ", $this->recipients)],
             ['From', $this->sender],
         ];
