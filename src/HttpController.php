@@ -48,7 +48,8 @@ class HttpController
     private function convertToPublicPath(string $originalPath): string
     {
         $path = $originalPath === '/' ? '/index.php' : $originalPath;
-        return "public" . $path;
+
+        return __DIR__ . "/../public" . str_replace("..", "", $path);
     }
 
     private function handleApiCall(ServerRequestInterface $request): Response
