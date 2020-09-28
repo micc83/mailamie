@@ -1,7 +1,22 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+$dir = __DIR__.'/..';
+
+if (!file_exists($dir.'/autoload.php')) {
+    $dir = __DIR__.'/../vendor';
+}
+
+if (!file_exists($dir.'/autoload.php')) {
+    $dir = __DIR__.'/../../..';
+}
+
+if (!file_exists($dir.'/autoload.php')) {
+    echo 'Autoload not found.';
+    exit(1);
+}
+
+require $dir.'/autoload.php';
 
 use Mailamie\Config;
 use Mailamie\StartServer;
@@ -9,7 +24,7 @@ use Symfony\Component\Console\Application;
 
 $localConfig = @include getenv("HOME") . '/.mailamie.config.php';
 
-$config = new Config(require 'config.php', $localConfig ?: null);
+$config = new Config(require __DIR__ . '/../config.php', $localConfig ?: null);
 
 $application = new Application('mailamie', Config::VERSION);
 
