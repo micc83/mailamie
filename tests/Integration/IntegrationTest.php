@@ -40,7 +40,7 @@ class IntegrationTest extends TestCase
 
         $this->loop = Factory::create();
 
-        $this->process = new Process('exec php index.php');
+        $this->process = new Process('exec php bin/mailamie');
         $this->process->start($this->loop);
 
         $this->loop->addTimer(2, function () {

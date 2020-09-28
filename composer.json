@@ -31,7 +31,6 @@
   },
   "require-dev": {
     "phpstan/phpstan": "^0.12.38",
-    "squizlabs/php_codesniffer": "*",
     "friendsofphp/php-cs-fixer": "^2.16",
     "phpunit/phpunit": "^9",
     "phpmailer/phpmailer": "^6.1",
@@ -67,6 +66,9 @@
     "post-install-cmd": "@cghooks add --ignore-lock",
     "post-update-cmd": "@cghooks update"
   },
+  "bin": [
+    "bin/mailamie"
+  ],
   "config": {
     "preferred-install": "dist",
     "sort-packages": true,

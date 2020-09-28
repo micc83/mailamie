@@ -17,12 +17,12 @@
 
 ## Why
 
-Sometime in the past I just needed a simple tool to verify that some legacy project, without tests in place or with some 
-very complex environment sent the right emails to the right people. Surely there're many valid tools out there for the 
+Sometime you just need a simple tool to verify that some legacy project, without tests in place or with some 
+very complex environment, sends the right emails to the right people. Surely there're many valid tools out there for the 
 job but as it's not something happening every day it's pretty cumbersome having to install these tools.
 
-**Mailamie** is a side project I've put up in my summer vacations for playing with async PHP, using it is just simple 
-as setting a few parameters on my project:
+**Mailamie** is a side project I've put up in my summer vacations for playing with async PHP. Using it is as simple 
+as setting a few parameters on your project:
 ```dotenv
 # Ex. Laravel .env file
 MAIL_MAILER=smtp
@@ -30,7 +30,7 @@ MAIL_HOST=smtp.mailtrap.io
 MAIL_PORT=8025
 MAIL_ENCRYPTION=null
 ```
-and running it on my shell with the command:
+and running it with the command:
 ```shell script
 $ mailamie
 ```
@@ -52,13 +52,9 @@ blocked.
 
 ![](docs/cli.png)
 
-also in verbose mode:
-
-![](docs/cli-verbose.png)
-
 or, for better UX, in the browser:
 
-![](docs/web.png)
+![](docs/browser.png)
 
 ## Install
 
@@ -84,10 +80,11 @@ Description:
 
 Usage:
   mailamie [options]
-  mailamie --host=127.0.0.1:25    Ex. SMTP Host definition
+  mailamie --host=127.0.0.1 --port=25    Ex. SMTP Host definition
 
 Options:
-  -H, --host=HOST       Set the host on which to listen for SMTP calls
+  -H, --host=HOST       Set the host on which to listen for calls
+  -p, --port=PORT       Set the port on which to listen for SMTP calls
   -h, --help            Display this help message
   -q, --quiet           Do not output any message
   -V, --version         Display this application version
@@ -99,6 +96,7 @@ Options:
 Help:
   You can define custom configuration from the file ~/.mailamie.config.php,
   check the project readme file at https://github.com/micc83/mailamie
+  for all the available settings.
 ```
 
 ## Settings
@@ -116,17 +114,20 @@ This files returns a PHP array with the following available settings.
 
 return [
     'smtp' => [
-        'host' => '127.0.0.1:8025',
+        'host' => '127.0.0.1',
+        'port' => '8025'
     ],
 
-    'web' => [
-        'host' => '127.0.0.1:8080',
+    'http' => [
+        'host' => '127.0.0.1',
+        'port' => '8080'
     ],
 
     'websocket' => [
-        'host' => '127.0.0.1:1338',
+        'host' => '127.0.0.1',
+        'port' => '1338'
     ],
 ];
 ```
 
-You'd better define only the needed one, in case something should change after upgrades.
+You'd better define only the needed ones, in case something should change after upgrades.
