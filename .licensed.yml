@@ -1,0 +1,16 @@
+name: 'micc83/mailamie'
+
+sources:
+  composer: true
+  npm: true
+
+composer:
+  application_path: "/usr/local/bin/composer"
+
+allowed:
+  - mit
+  - apache-2.0
+  - bsd-2-clause
+  - bsd-3-clause
+  - cc0-1.0
+  - isc
