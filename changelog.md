@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Changed composer.json to require only needed React dependencies
+
+### Removed
+- Removed todo file and created issues for missing items
+
 ## [1.0.2] - 2020-09-28
 
 ### Fixed
