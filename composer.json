@@ -23,7 +23,8 @@
     "ext-json": "*",
     "ext-mbstring": "*",
     "cboden/ratchet": "^0.4.3",
-    "react/react": "^1.1",
+    "react/event-loop": "^1.1",
+    "react/http": "^1.1",
     "symfony/console": "^5.1",
     "symfony/event-dispatcher": "^5.1",
     "zbateson/mail-mime-parser": "^1.2"
@@ -34,7 +35,6 @@
     "friendsofphp/php-cs-fixer": "^2.16",
     "phpunit/phpunit": "^9",
     "phpmailer/phpmailer": "^6.1",
-    "react/http": "^1.0",
     "ratchet/pawl": "^0.3.5",
     "react/child-process": "^0.6.1"
   },
