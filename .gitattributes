@@ -1,1 +1,3 @@
 docs export-ignore
+public/app.js linguist-generated
+public/app.css linguist-generated
