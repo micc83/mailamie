@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Added github/licensed to check license on dependencies
+- Added codecov badge to readme file (Fix #6)
 
 ### Changed
 - Bump axios from 0.19.2 to 0.21.1 (#8)
