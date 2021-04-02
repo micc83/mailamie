@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.4] - 2021-04-02
+
 ### Added
 - Added github/licensed to check license on dependencies
 - Added codecov badge to readme file (Fix #6)

@@ -11,7 +11,7 @@ class Config
     /** @var array<string, string|array|null>|null */
     private ?array $altParams;
 
-    const VERSION = "1.0.3";
+    const VERSION = "1.0.4";
     const DATE_FORMAT = "Y-m-d H:i:s";
 
     /**
