@@ -1,5 +1,5 @@
 vendor
 node_modules
-.php_cs.cache
 .phpunit.result.cache
 .licenses
+.php-cs-fixer.cache

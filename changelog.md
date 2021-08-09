@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Update composer dependencies
+- Update friendsofphp/php-cs-fixer to v3.0.2
+- Update zbateson/mail-mime-parser to v1.3
+
 ### Fixed
 - Remove double dots from email content rows start (fix #13)
 
