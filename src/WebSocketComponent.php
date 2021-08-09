@@ -12,7 +12,7 @@ use SplObjectStorage;
 class WebSocketComponent implements MessageComponentInterface
 {
     /**
-     * @var SplObjectStorage
+     * @var SplObjectStorage<ConnectionInterface, int>
      */
     protected SplObjectStorage $clients;
     private Store $store;

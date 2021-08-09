@@ -2,6 +2,8 @@
 
 namespace Mailamie\Emails;
 
+use ZBateson\MailMimeParser\Header\AbstractHeader;
+use ZBateson\MailMimeParser\Header\AddressHeader;
 use ZBateson\MailMimeParser\Header\Part\AddressPart;
 use ZBateson\MailMimeParser\Message as ParseMessage;
 use ZBateson\MailMimeParser\Message\Part\MessagePart;
@@ -18,13 +20,16 @@ class Parser
         $message = ParseMessage::from($rawContent);
 
         $from = $message->getHeader('from')->getRawValue();
+        /** @var AddressHeader|null $toHeader */
         $toHeader = $message->getHeader('to');
         $recipients = $this->joinNameAndEmail($toHeader ? $toHeader->getAddresses() : []);
+        /** @var AddressHeader|null $ccHeader */
         $ccHeader = $message->getHeader('cc');
         $ccs = $this->joinNameAndEmail($ccHeader ? $ccHeader->getAddresses() : []);
         $subject = (string) $message->getHeaderValue('subject');
         $html = (string) $message->getHtmlContent();
         $text = (string) $message->getTextContent();
+        /** @var AbstractHeader|null $replyToHeader */
         $replyToHeader = $message->getHeader('reply-to');
         $replyTo = $replyToHeader ? $replyToHeader->getRawValue() : null;
         $attachments = $this->buildAttachmentFrom(
