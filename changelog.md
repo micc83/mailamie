@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Remove double dots from email content rows start (fix #13)
+- Parse null subject, textBody and htmlBody to empty strings on Mailamie\Emails\Message creation (fix #12)
 
 ## [1.0.4] - 2021-04-02
 

@@ -22,9 +22,9 @@ class Parser
         $recipients = $this->joinNameAndEmail($toHeader ? $toHeader->getAddresses() : []);
         $ccHeader = $message->getHeader('cc');
         $ccs = $this->joinNameAndEmail($ccHeader ? $ccHeader->getAddresses() : []);
-        $subject = $message->getHeaderValue('subject');
-        $html = $message->getHtmlContent();
-        $text = $message->getTextContent();
+        $subject = (string) $message->getHeaderValue('subject');
+        $html = (string) $message->getHtmlContent();
+        $text = (string) $message->getTextContent();
         $replyToHeader = $message->getHeader('reply-to');
         $replyTo = $replyToHeader ? $replyToHeader->getRawValue() : null;
         $attachments = $this->buildAttachmentFrom(

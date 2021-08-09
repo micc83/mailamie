@@ -30,15 +30,8 @@ class Message
     private array $attachments;
 
     /**
-     * Message constructor.
-     * @param string $raw
-     * @param string $sender
      * @param string[] $recipients
      * @param string[] $ccs
-     * @param string $subject
-     * @param string $htmlBody
-     * @param string $textBody
-     * @param string|null $replyTo
      * @param string[] $allRecipients
      * @param Attachment[] $attachments
      */
@@ -54,7 +47,7 @@ class Message
         array $allRecipients,
         array $attachments
     ) {
-        $this->id = (string)uniqid();
+        $this->id = uniqid();
         $this->raw = $raw;
         $this->sender = $sender;
         $this->recipients = $recipients;
