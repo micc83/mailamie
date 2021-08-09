@@ -96,6 +96,12 @@ class SmtpConnection
 
     private function addToMessageBody(string $content): void
     {
+        /**
+         * Remove double dots from rows start
+         * @see https://github.com/micc83/mailamie/issues/13
+         */
+        $content = preg_replace("/^(\.\.)/m", ".", $content);
+
         $this->messageBody .= $content;
     }
 
