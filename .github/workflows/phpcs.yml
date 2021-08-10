@@ -36,4 +36,4 @@ jobs:
         run: composer install --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
       - name: Execute PHP Code Style Check
-        run: ./vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no --diff-format udiff
+        run: ./vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no
