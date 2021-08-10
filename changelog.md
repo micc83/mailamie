@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.5] - 2021-08-10
+
 ### Changed
 - Update composer dependencies
 - Update friendsofphp/php-cs-fixer to v3.0.2
