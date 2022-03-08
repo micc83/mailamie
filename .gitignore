@@ -3,3 +3,4 @@ node_modules
 .phpunit.result.cache
 .licenses
 .php-cs-fixer.cache
+composer.lock

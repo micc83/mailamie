@@ -8,7 +8,7 @@ use Mailamie\Emails\Message;
 trait Messages
 {
     /**
-     * @param array<string|array> $override
+     * @param array<string|array<string>> $override
      * @return Message
      */
     private function createMessage(array $override = []): Message

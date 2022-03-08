@@ -6,9 +6,9 @@ use Exception;
 
 class Config
 {
-    /** @var array<string, string|array|null> */
+    /** @var array<string, string|array<string>|null> */
     private array $params;
-    /** @var array<string, string|array|null>|null */
+    /** @var array<string, string|array<string>|null>|null */
     private ?array $altParams;
 
     const VERSION = "1.0.4";
@@ -16,8 +16,8 @@ class Config
 
     /**
      * Config constructor.
-     * @param array<string|array|null> $params
-     * @param array<string|array|null>|null $altParams
+     * @param array<string|array<string>|null> $params
+     * @param array<string|array<string>|null>|null $altParams
      */
     public function __construct(array $params, array $altParams = null)
     {
@@ -34,18 +34,18 @@ class Config
     {
         if ($this->altParams) {
             try {
-                return static::dotGet($key, $this->altParams);
+                return self::dotGet($key, $this->altParams);
             } catch (Exception $e) {
             }
         }
 
-        return static::dotGet($key, $this->params);
+        return self::dotGet($key, $this->params);
     }
 
     /**
      * @param string $key
-     * @param array<string, string|array|null> $data
-     * @return array<string, string|array|null>|null
+     * @param array<string, string|array<string>|null> $data
+     * @return array<string, string|array<string>|null>|null|string
      * @throws Exception
      */
     private static function dotGet(string $key, array $data)

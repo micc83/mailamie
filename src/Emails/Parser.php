@@ -6,7 +6,7 @@ use ZBateson\MailMimeParser\Header\AbstractHeader;
 use ZBateson\MailMimeParser\Header\AddressHeader;
 use ZBateson\MailMimeParser\Header\Part\AddressPart;
 use ZBateson\MailMimeParser\Message as ParseMessage;
-use ZBateson\MailMimeParser\Message\Part\MessagePart;
+use ZBateson\MailMimeParser\Message\IMessagePart;
 
 class Parser
 {
@@ -17,7 +17,7 @@ class Parser
      */
     public function parse(string $rawContent, array $allRecipients = []): Message
     {
-        $message = ParseMessage::from($rawContent);
+        $message = ParseMessage::from($rawContent, true);
 
         $from = $message->getHeader('from')->getRawValue();
         /** @var AddressHeader|null $toHeader */
@@ -51,12 +51,12 @@ class Parser
     }
 
     /**
-     * @param MessagePart[] $attachments
+     * @param IMessagePart[] $attachments
      * @return Attachment[]
      */
     private function buildAttachmentFrom(array $attachments): array
     {
-        return array_map(function (MessagePart $part) {
+        return array_map(function (IMessagePart $part) {
             return new Attachment(
                 $part->getFilename(),
                 $part->getContent(),

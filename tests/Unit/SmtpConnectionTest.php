@@ -30,7 +30,7 @@ class SmtpConnectionTest extends TestCase
 
         $this->expectDispatch(
             $dispatcher,
-            new Response(220, "Service ready", "mailamie")
+            new Response(220, "Service ready")
         );
 
         $smtp->ready();

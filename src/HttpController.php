@@ -10,7 +10,9 @@ use Throwable;
 class HttpController
 {
     private Store $store;
+    // @phpstan-ignore-next-line > Used by index.php
     private string $version;
+    // @phpstan-ignore-next-line > Used by index.php
     private string $websocketHost;
 
     public function __construct(Store $store, string $websocketHost)
@@ -32,7 +34,7 @@ class HttpController
             $path = $this->convertToPublicPath($path);
 
             if (file_exists($path)) {
-                if (static::endsWith($path, '.php')) {
+                if (self::endsWith($path, '.php')) {
                     return $this->handlePhpFile($path);
                 }
 
@@ -107,7 +109,7 @@ class HttpController
         ];
 
         foreach ($mimeTypes as $ext => $type) {
-            if (static::endsWith($path, ".{$ext}")) {
+            if (self::endsWith($path, ".{$ext}")) {
                 return $type;
             }
         }

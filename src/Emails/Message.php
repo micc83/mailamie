@@ -111,7 +111,7 @@ class Message
     }
 
     /**
-     * @return array[]
+     * @return array<array<string>>
      */
     public function toTable(): array
     {
@@ -145,7 +145,7 @@ class Message
     }
 
     /**
-     * @return array<string|array>
+     * @return array<string, string|null|array<string>>
      */
     public function toArray(): array
     {
@@ -166,7 +166,7 @@ class Message
     }
 
     /**
-     * @return array[]
+     * @return array<string, string|null|array<string>>
      */
     private function attachmentsToArray(): array
     {
