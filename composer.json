@@ -1,5 +1,6 @@
 {
   "name": "micc83/mailamie",
+  "version": "1.1.0",
   "description": "Catch All SMTP Server for testing",
   "keywords": [
     "smtp",
