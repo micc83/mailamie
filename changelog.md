@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Update laravel-mix to ^6.0
+- Update axios to ^0.26
+
 ## [1.1.0] - 2022-03-08
 
 ### Added
