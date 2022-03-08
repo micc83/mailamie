@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Add support for PHP ^8.0
+- Add composer check command to run phpunit, phpstan and php-cs-fixer
+
+### Removed
+- Remove brainmaestro/composer-git-hooks
+
 ## [1.0.5] - 2021-08-10
 
 ### Changed
