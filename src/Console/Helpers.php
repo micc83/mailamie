@@ -32,7 +32,7 @@ trait Helpers
     }
 
     /**
-     * @param array[] $rows
+     * @param array<array<string>> $rows
      * @return void
      */
     private function writeContentTable(array $rows): void

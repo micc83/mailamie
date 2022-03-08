@@ -18,24 +18,23 @@
     }
   ],
   "require": {
-    "php": "^7.4",
+    "php": "^7.4|^8.0",
     "ext-fileinfo": "*",
     "ext-json": "*",
     "ext-mbstring": "*",
     "cboden/ratchet": "^0.4.3",
-    "react/event-loop": "^1.1",
-    "react/http": "^1.1",
+    "react/event-loop": "^1.2",
+    "react/http": "^1.2",
     "symfony/console": "^5.1",
     "symfony/event-dispatcher": "^5.1",
-    "zbateson/mail-mime-parser": "^1.3"
+    "zbateson/mail-mime-parser": "^2.2"
   },
   "require-dev": {
-    "brainmaestro/composer-git-hooks": "^2.8",
-    "phpstan/phpstan": "^0.12.38",
+    "phpstan/phpstan": "^1.4.8",
     "friendsofphp/php-cs-fixer": "^3.0",
     "phpunit/phpunit": "^9",
     "phpmailer/phpmailer": "^6.1",
-    "ratchet/pawl": "^0.3.5",
+    "ratchet/pawl": "^0.4.1",
     "react/child-process": "^0.6.1"
   },
   "autoload-dev": {
@@ -48,23 +47,12 @@
       "Mailamie\\": "src/"
     }
   },
-  "extra": {
-    "hooks": {
-      "pre-commit": [
-        "echo Committing as $(git config user.name)",
-        "./vendor/bin/php-cs-fixer fix"
-      ],
-      "pre-push": [
-        "./vendor/bin/php-cs-fixer fix --dry-run",
-        "./vendor/bin/phpstan analyze",
-        "./vendor/bin/phpunit --stop-on-failure --stop-on-error"
-      ]
-    }
-  },
   "scripts": {
-    "cghooks": "vendor/bin/cghooks",
-    "post-install-cmd": "@cghooks add --ignore-lock",
-    "post-update-cmd": "@cghooks update"
+    "check": [
+      "./vendor/bin/php-cs-fixer fix --dry-run",
+      "./vendor/bin/phpstan analyze",
+      "./vendor/bin/phpunit --stop-on-failure --stop-on-error"
+    ]
   },
   "bin": [
     "bin/mailamie"

@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
 use React\ChildProcess\Process;
-use React\EventLoop\Factory;
+use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\Http\Browser;
 use React\Promise\ExtendedPromiseInterface;
@@ -38,7 +38,7 @@ class IntegrationTest extends TestCase
         $this->expectedSteps = null;
         $this->step = 0;
 
-        $this->loop = Factory::create();
+        $this->loop = Loop::get();
 
         $this->process = new Process('exec php bin/mailamie');
         $this->process->start($this->loop);

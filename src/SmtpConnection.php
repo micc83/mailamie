@@ -108,7 +108,7 @@ class SmtpConnection
     private function send(int $statusCode, string $comment = null): void
     {
         $this->events->dispatch(
-            new Response($statusCode, static::$statusDescriptions[$statusCode], $comment)
+            new Response($statusCode, self::$statusDescriptions[$statusCode])
         );
         $response = implode(" ", array_filter([$statusCode, $comment]));
         $this->connection->write("{$response} \r\n");

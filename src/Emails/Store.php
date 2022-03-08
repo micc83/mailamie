@@ -37,7 +37,7 @@ class Store
     }
 
     /**
-     * @return array[]
+     * @return array<int, array<string, array<string>|string>>.
      */
     public function all(): array
     {
